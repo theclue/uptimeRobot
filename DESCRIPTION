@@ -1,0 +1,15 @@
+Package: uptimeRobots
+Type: Package
+Title: R interface for UptimeRobots ping service
+Version: 0.1
+Date: 2015-09-11
+Author: Gabriele Baldassarre <gabriele@gabrielebaldassarre.com>
+Maintainer: Gabriele Baldassarre <gabriele@gabrielebaldassarre.com>
+Depends:
+    R (>= 3.1.0),
+    httr,
+    rjson,
+    RCurl,
+    plyr,
+    stringi
+License: MIT
