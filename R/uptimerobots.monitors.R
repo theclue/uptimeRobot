@@ -61,7 +61,7 @@ uptimerobots.monitors <- function(api.key, monitors=NA, response.times=FALSE, fi
     )
   }
   else {
-    message("Error getting monitors metadata.")
+    message(data$message)
     return(NULL)
   }
   
