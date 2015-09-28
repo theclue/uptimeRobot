@@ -49,12 +49,12 @@ uptimerobot.monitor.new <- function(api.key,
   # Decode monitor type
   if(class(type) == "character"){
     type <- as.numeric(factor(tolower(type), labels=1:4, levels=c("http", "keyword", "ping", "port")))
-  } else if(!(class(type) %in% c("integer", "numeric"))) stop(paste0(class(type), "is not a valid format for monitor type", sep=" "))
+  } else if(!(is.na(type)) & !(class(type) %in% c("integer", "numeric"))) stop(paste(class(type), "is not a valid format for monitor type", sep=" "))
   
   # Decode monitor subtype
   if(class(subtype) == "character"){
     subtype <- as.numeric(factor(toupper(subtype), labels=c(1,2,3,4,5,6,99), levels=c("HTTP", "HTTPS", "FTP", "SMTP", "POP3", "IMPAP", "Custom Port")))
-    } else if(!(class(subtype) %in% c("integer", "numeric"))) stop(paste0(class(subtype), "is not a valid format for monitor subtype", sep=" "))
+    } else if(!(is.na(subtype)) & !(class(subtype) %in% c("integer", "numeric"))) stop(paste(class(subtype), "is not a valid format for monitor subtype", sep=" "))
   
   
   if(!(is.na(alert.contacts))){
