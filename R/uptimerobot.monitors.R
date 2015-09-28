@@ -111,9 +111,9 @@ uptimerobot.monitors <- function(api.key,
       if("interval" %in% fields.o) data.merged$interval <- as.integer(data.merged$interval)
       
       # Lookup factors
-      if("type" %in% fields.o) data.merged$type <- factor(as.integer(data.merged$type), levels=1:4, labels=c("HTTP(s)", "Keyword", "Ping", "Port"))
+      if("type" %in% fields.o) data.merged$type <- factor(as.integer(data.merged$type), levels=1:4, labels=c("HTTP", "Keyword", "Ping", "Port"))
       if("status" %in% fields.o) data.merged$status <- factor(as.integer(data.merged$status), levels=c(0, 1, 2, 8, 9), labels=c("paused", "not checked yet", "up", "seems down", "down"))
-      if("subtype" %in% fields.o) data.merged$subtype <- factor(as.integer(data.merged$subtype), levels=c(1,2,3,4,5,6,99), labels=c("HTTP (80)", "HTTPS (443)", "FTP (21)", "SMTP (25)", "POP3 (110)", "IMPAP (143)", "Custom Port"))
+      if("subtype" %in% fields.o) data.merged$subtype <- factor(as.integer(data.merged$subtype), levels=c(1,2,3,4,5,6,99), labels=c("HTTP", "HTTPS", "FTP", "SMTP", "POP3", "IMPAP", "Custom Port"))
       if("keywordtype" %in% fields.o) data.merged$keywordtype <- factor(as.integer(data.merged$keywordtype), levels=c(1,2), labels=c("exists", "not exists"))
       
       
