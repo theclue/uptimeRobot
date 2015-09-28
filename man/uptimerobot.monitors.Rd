@@ -4,19 +4,18 @@
 \alias{uptimerobot.monitors}
 \title{Get general informations for one or more monitors}
 \usage{
-uptimerobot.monitors(api.key, monitors = NA, types = NA, statuses = NA,
-  search = NA, summary = list(), limit = 50, offset = 0,
-  fields = uptimerobot.fields("monitor")$typical)
+uptimerobot.monitors(api.key, monitors = NULL, types = NULL,
+  statuses = NULL, search = NULL, summary = list(), limit = 50,
+  offset = 0, fields = uptimerobot.fields("monitor")$typical)
 }
 \arguments{
 \item{api.key}{A valid key for connecting to UptimeRobors public API.}
 
-\item{monitors}{vector or comma-delimited string with the IDs of the monitors to get.
-If the argument is missing or NA, all the available monitors will be returned.}
+\item{monitors}{vector or comma-delimited string with the IDs of the monitors to get. If not used or set to \code{NULL}, will return all monitors in an account.}
 
-\item{types}{vector or comma-delimited string of monitor types. If not \code{NA}, the function will return all monitors types (HTTP, keyword, ping..) in an account. Else, it is possible to define any number of monitor types.}
+\item{types}{vector or comma-delimited string of monitor types. If not used or set to \code{NULL}, the function will return all monitors types (HTTP, keyword, ping..) in an account. Else, it is possible to define any number of monitor types. You can use both the friendly name (string) or the index (integer) here.}
 
-\item{search}{An optional keyword of to search within monitor.url and monitor.friendly.name to get filtered results.}
+\item{search}{An optional keyword of to search within monitor URL or friendly name to get filtered results.}
 
 \item{summary}{list of logical values to flag summary indicators to add to the output dataset.}
 
@@ -27,7 +26,7 @@ If the argument is missing or NA, all the available monitors will be returned.}
 \item{fields}{vector or comma-delimited string with the general informations to include in the output dataset.
 You may use the helper function \code{\link{uptimerobot.fields}} if you don't want to manually compile the list of fields.}
 
-\item{statutes}{vector or comma-delimited string of monitor statutes. If not \code{NA}, the function will return  all monitors statuses (up, down, paused) in an account. Else, it is possible to define any number of monitor statuses.}
+\item{statutes}{vector or comma-delimited string of monitor statutes. If not used or set to \code{NULL}, the function will return  all monitors statuses (up, down, paused) in an account. Else, it is possible to define any number of monitor statuses. You can use both the friendly name (string) or the index (integer) here.}
 }
 \description{
 \code{uptimerobots.monitors.responses} return a dataset with general informations

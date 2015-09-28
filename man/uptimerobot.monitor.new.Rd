@@ -4,9 +4,9 @@
 \alias{uptimerobot.monitor.new}
 \title{Add a new monitor}
 \usage{
-uptimerobot.monitor.new(api.key, friendly.name, URL, type, subtype = NA,
-  port = NA, interval = 5, keyword.type = NA, keyword.value = NA,
-  HTTP.username = NA, HTTP.password = NA, alert.contacts = NA)
+uptimerobot.monitor.new(api.key, friendly.name, URL, type, subtype = NULL,
+  port = NULL, interval = 5, keyword.type = NULL, keyword.value = NULL,
+  HTTP.username = NULL, HTTP.password = NULL, alert.contacts = NULL)
 }
 \arguments{
 \item{api.key}{string with a valid key for connecting to Uptimerobot API.}
@@ -15,7 +15,7 @@ uptimerobot.monitor.new(api.key, friendly.name, URL, type, subtype = NA,
 
 \item{URL}{string with the URL/IP of the monitor.}
 
-\item{type}{string or integer with the type of the monitor. You can use both the friendly name (string)or the index (integer) here.}
+\item{type}{string or integer with the type of the monitor. You can use both the friendly name (string) or the index (integer) here.}
 
 \item{subtype}{string used only for "Port monitoring" to set which pre-defined port/service is monitored or if a custom port is monitored. You can use both the friendly name (string) or the index (integer) here.}
 
