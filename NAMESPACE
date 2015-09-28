@@ -2,6 +2,7 @@
 
 export(uptimerobot.account.details)
 export(uptimerobot.contacts)
+export(uptimerobot.fields)
 export(uptimerobot.monitor.contacts)
 export(uptimerobot.monitor.logs)
 export(uptimerobot.monitor.responses)
