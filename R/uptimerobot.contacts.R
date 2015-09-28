@@ -31,7 +31,7 @@
 #' @param offset An integer value to set the index of the first monitor to get (used for pagination).
 #'
 uptimerobot.contacts <- function(api.key, 
-                                  contacts=NA,
+                                  contacts=NULL,
                                   limit=50,
                                   offset=0,
                                   fields=uptimerobot.fields("contact")$typical){
@@ -45,7 +45,7 @@ uptimerobot.contacts <- function(api.key,
     getURL(
       paste0("https://api.uptimerobot.com/getAlertContacts?apiKey=",
              api.key,
-             ifelse(is.na(contacts), "", paste0("&alertcontacts=", paste0(unique(unlist(strsplit(contacts, split = ","))), collapse = "-"), sep="")),
+             ifelse(is.null(contacts), "", paste0("&alertcontacts=", paste0(unique(unlist(strsplit(contacts, split = ","))), collapse = "-"), sep="")),
              "&limit=", limit,
              "&offset=", offset,
              "&format=json&noJsonCallback=1"
