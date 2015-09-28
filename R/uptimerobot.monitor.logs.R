@@ -28,13 +28,6 @@ uptimerobot.monitor.logs <- function(api.key,
                                      limit=50,
                                      offset=0){
 
-  if(is.null(monitors)){
-    return(data.frame(monitor.id=character(),
-                      type=character(), 
-                      datetime=as.Date(character()), 
-                      stringsAsFactors=FALSE) )
-  }
-  
   data <- fromJSON(
     getURL(
       paste0("https://api.uptimerobot.com/getMonitors?apiKey=",
@@ -79,8 +72,7 @@ uptimerobot.monitor.logs <- function(api.key,
     )
   }
   else {
-    message(paste("Error:", data$message))
-    return(NULL)
+    stop("Error:", data$message)
   }
   
 }

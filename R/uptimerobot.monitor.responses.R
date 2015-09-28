@@ -29,12 +29,6 @@ uptimerobot.monitor.responses <- function(api.key,
                                           limit=50,
                                           offset=0){
 
-  if(is.null(monitors)){
-    return(data.frame(monitor.id=character(),
-                      datetime=as.Date(character()), 
-                      value=integer(), 
-                      stringsAsFactors=FALSE) )
-  }
   
   data <- fromJSON(
     getURL(
@@ -80,8 +74,7 @@ uptimerobot.monitor.responses <- function(api.key,
     )
   }
   else {
-    message(paste("Error:", data$message))
-    return(NULL)
+    stop(data$message)
   }
   
 }

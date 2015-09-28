@@ -35,8 +35,7 @@ uptimerobot.account.details <- function(api.key, unlist = FALSE){
     return(data.unlisted)
   }
   else {
-    message(paste("Error:", data$message))
-    return(NULL)
+    stop(data$message)
   }
   
 }
