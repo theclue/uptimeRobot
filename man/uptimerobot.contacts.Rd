@@ -5,7 +5,7 @@
 \title{Get general informations about the registered contacts}
 \usage{
 uptimerobot.contacts(api.key, contacts = NA, limit = 50, offset = 0,
-  fields = "id,value,friendlyname,type,status")
+  fields = uptimerobot.fields("contact")$typical)
 }
 \arguments{
 \item{api.key}{A valid key for connecting to UptimeRobors public API.}
@@ -17,7 +17,8 @@ If the argument is missing or NA, all the available monitors will be returned.}
 
 \item{offset}{An integer value to set the index of the first monitor to get (used for pagination).}
 
-\item{fields}{vector or comma-delimited string with the general informations to include in the output dataset.}
+\item{fields}{vector or comma-delimited string with the general informations to include in the output dataset.
+You may use the helper function \code{\link{uptimerobot.fields}} if you don't want to manually compile the list of fields.}
 }
 \description{
 \code{uptimerobot.contacts} return a dataset with general informations

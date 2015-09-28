@@ -47,7 +47,7 @@
 #' @param offset An integer value to set the index of the first monitor to get (used for pagination).
 #'
 #' @param fields vector or comma-delimited string with the general informations to include in the output dataset.
-#' \code{n}.
+#' You may use the helper function \code{\link{uptimerobot.fields}} if you don't want to manually compile the list of fields.
 #'
 uptimerobot.monitors <- function(api.key, 
                                  monitors=NA,
@@ -57,9 +57,9 @@ uptimerobot.monitors <- function(api.key,
                                  summary=list(),
                                  limit=50,
                                  offset=0,
-                                 fields="id,friendlyname,url,type,port,interval,status"){
+                                 fields=uptimerobot.fields("monitor")$typical){
   
-  fields <- ifelse(length(fields)==0, "id", fields)
+  fields <- (function(x){ if(length(x) == 0) "id" else x })(fields)
   
   fields.o <- unique(unlist(strsplit(fields, split = ",")))
   fields.v <- unique(c(unlist(strsplit(fields, split = ","))), "id")
@@ -116,7 +116,7 @@ uptimerobot.monitors <- function(api.key,
       if("subtype" %in% fields.o) data.merged$subtype <- factor(as.integer(data.merged$subtype), levels=c(1,2,3,4,5,6,99), labels=c("HTTP (80)", "HTTPS (443)", "FTP (21)", "SMTP (25)", "POP3 (110)", "IMPAP (143)", "Custom Port"))
       if("keywordtype" %in% fields.o) data.merged$keywordtype <- factor(as.integer(data.merged$keywordtype), levels=c(1,2), labels=c("exists", "not exists"))
       
-
+      
       if(!("id" %in% fields.o)) data.merged$id <- NULL
       
       # Pagination
@@ -136,8 +136,7 @@ uptimerobot.monitors <- function(api.key,
     )
   }
   else {
-    message(paste("Error:", data$message))
-    return(NULL)
+    stop(data$message)
   }
   
 }

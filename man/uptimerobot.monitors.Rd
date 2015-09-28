@@ -6,7 +6,7 @@
 \usage{
 uptimerobot.monitors(api.key, monitors = NA, types = NA, statuses = NA,
   search = NA, summary = list(), limit = 50, offset = 0,
-  fields = "id,friendlyname,url,type,port,interval,status")
+  fields = uptimerobot.fields("monitor")$typical)
 }
 \arguments{
 \item{api.key}{A valid key for connecting to UptimeRobors public API.}
@@ -25,7 +25,7 @@ If the argument is missing or NA, all the available monitors will be returned.}
 \item{offset}{An integer value to set the index of the first monitor to get (used for pagination).}
 
 \item{fields}{vector or comma-delimited string with the general informations to include in the output dataset.
-\code{n}.}
+You may use the helper function \code{\link{uptimerobot.fields}} if you don't want to manually compile the list of fields.}
 
 \item{statutes}{vector or comma-delimited string of monitor statutes. If not \code{NA}, the function will return  all monitors statuses (up, down, paused) in an account. Else, it is possible to define any number of monitor statuses.}
 }

@@ -24,6 +24,7 @@
 #' If the argument is missing or NA, all the available monitors will be returned. 
 #'
 #' @param fields vector or comma-delimited string with the general informations to include in the output dataset.
+#' You may use the helper function \code{\link{uptimerobot.fields}} if you don't want to manually compile the list of fields.
 #' 
 #' @param limit An integer value used for pagination. Defines the max number of records to return in each page. Default and max. is 50.
 #' 
@@ -33,10 +34,10 @@ uptimerobot.contacts <- function(api.key,
                                   contacts=NA,
                                   limit=50,
                                   offset=0,
-                                  fields="id,value,friendlyname,type,status"){
+                                  fields=uptimerobot.fields("contact")$typical){
   
-  fields <- ifelse(length(fields)==0, "id", fields)
-  
+  fields <- (function(x){ if(length(x) == 0) "id" else x })(fields)
+
   fields.o <- unique(unlist(strsplit(fields, split = ",")))
   fields.v <- unique(c(unlist(strsplit(fields, split = ","))), "id")
 
@@ -82,8 +83,7 @@ uptimerobot.contacts <- function(api.key,
     )
   }
   else {
-    message(paste("Error:", data$message))
-    return(NULL)
+    stop(data$message)
   }
   
 }
