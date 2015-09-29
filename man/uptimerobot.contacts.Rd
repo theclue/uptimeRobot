@@ -2,9 +2,9 @@
 % Please edit documentation in R/uptimerobot.contacts.R
 \name{uptimerobot.contacts}
 \alias{uptimerobot.contacts}
-\title{Get general informations about the registered contacts}
+\title{Get general informations about the alert contacts}
 \usage{
-uptimerobot.contacts(api.key, contacts = NA, limit = 50, offset = 0,
+uptimerobot.contacts(api.key, contacts = NULL, limit = 50, offset = 0,
   fields = uptimerobot.fields("contact")$typical)
 }
 \arguments{
@@ -25,6 +25,8 @@ You may use the helper function \code{\link{uptimerobot.fields}} if you don't wa
 for a set of contacts used to be alert in case of uptimerobot events.
 }
 \details{
+The alert contacts are whom to be notified when the monitor goes up/down.
+
 If a vector of contact IDs is not given, the function will return data for all the available contacts.
 
 The API uses pagination and returns no more than 50 contacts on each page. Use \code{limit} and \code{offset} to set a different number of

@@ -1,11 +1,11 @@
-#' @rdname uptimerobot.monitor.delete
+#' @rdname uptimerobot.contact.delete
 #' @export
 #'
 #' @title 
-#' Delete a monitor
+#' Delete an alert contact
 #'
 #' @description
-#' \code{uptimerobot.monitor.delete} remove a monitor and all existing statistics of it.
+#' \code{uptimerobot.contact.delete} remove an alert contanct, unlinking from all the registered monitors.
 #' 
 #' The function returns \code{TRUE} in case success. An error is thrown otherwise.
 #'  
@@ -13,16 +13,16 @@
 #' Gabriele Baldassarre
 #' 
 #' @param api.key string with a valid key for connecting to Uptimerobot API.
-#' @param id numeric or integer with the ID of the monitor to delete.
+#' @param id numeric or integer with the ID of the contact to delete.
 #' 
-uptimerobot.monitor.delete <- function(api.key, id){
+uptimerobot.contact.delete <- function(api.key, id){
   
   
   data <- fromJSON(
     getURL(
-      paste0("https://api.uptimerobot.com/deleteMonitor?apiKey=",
+      paste0("https://api.uptimerobot.com/deleteAlertContact?apiKey=",
              api.key,
-             "&monitorID=", id,
+             "&alertContactID=", id,
              "&format=json&noJsonCallback=1"
       )      
     ),

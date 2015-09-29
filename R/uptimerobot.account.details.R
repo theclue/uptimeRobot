@@ -2,17 +2,16 @@
 #' @export
 #'
 #' @title 
-#' Get the account details for the account linked to the given API key
+#' Get the account details for who is linked to the given API key
 #'
 #' @description
 #' \code{uptimerobot.account.details} returns a list or a vector with the account details connected to the given api key.
-#' for the given monitors IDs.
 #' 
 #' @author
 #' Gabriele Baldassarre
 #'
-#' @param api.key A valid key for connecting to UptimeRobors public API.
-#' @param unlist Set to \code{TRUE} to unlist the output to a named vector, \code{FALSE} to get a named list.
+#' @param api.key a string with a valid key for connecting to UptimeRobors public API.
+#' @param unlist logical. Set to \code{TRUE} to unlist the output to a named vector, \code{FALSE} to get a named list.
 #' 
 uptimerobot.account.details <- function(api.key, unlist = FALSE){
   

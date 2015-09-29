@@ -11,7 +11,7 @@
 #' If a property has not to be updated, just omit it from the parameters or set to \code{NA}.
 #' To erase the value of a property, set it to an empty string, ie \code{""}, instead (not \code{NA} or \code{NULL}!).
 #' 
-#' The function returns the ID of the just-modified monitor in case success. An error is thrown otherwise.
+#' The function returns \code{TRUE} in case success. An error is thrown otherwise.
 #' 
 #' The type of a monitor can not be edited (like changing a HTTP monitor into a Port monitor).
 #'  
@@ -100,7 +100,7 @@ uptimerobot.monitor.edit <- function(api.key,
   )
   
   if(data$stat=="ok") {
-    return(as.numeric(data$monitor$id))
+    return(TRUE)
   }
   else {
     stop(data$message)

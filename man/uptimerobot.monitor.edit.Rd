@@ -5,9 +5,9 @@
 \title{Edit a monitor}
 \usage{
 uptimerobot.monitor.edit(api.key, id, friendly.name, URL, activate = TRUE,
-  subtype = NA, port = NA, interval = 5, keyword.type = NA,
-  keyword.value = NA, HTTP.username = NA, HTTP.password = NA,
-  alert.contacts = NA)
+  subtype = NULL, port = NULL, interval = 5, keyword.type = NULL,
+  keyword.value = NULL, HTTP.username = NULL, HTTP.password = NULL,
+  alert.contacts = NULL)
 }
 \arguments{
 \item{api.key}{string with a valid key for connecting to Uptimerobot API.}
@@ -43,7 +43,7 @@ uptimerobot.monitor.edit(api.key, id, friendly.name, URL, activate = TRUE,
 If a property has not to be updated, just omit it from the parameters or set to \code{NA}.
 To erase the value of a property, set it to an empty string, ie \code{""}, instead (not \code{NA} or \code{NULL}!).
 
-The function returns the ID of the just-modified monitor in case success. An error is thrown otherwise.
+The function returns \code{TRUE} in case success. An error is thrown otherwise.
 
 The type of a monitor can not be edited (like changing a HTTP monitor into a Port monitor).
 

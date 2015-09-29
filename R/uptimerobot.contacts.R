@@ -2,13 +2,15 @@
 #' @export
 #'
 #' @title 
-#' Get general informations about the registered contacts
+#' Get general informations about the alert contacts
 #'
 #' @description
 #' \code{uptimerobot.contacts} return a dataset with general informations
 #' for a set of contacts used to be alert in case of uptimerobot events.
 #' 
 #' @details 
+#' The alert contacts are whom to be notified when the monitor goes up/down. 
+#' 
 #' If a vector of contact IDs is not given, the function will return data for all the available contacts.
 #' 
 #' The API uses pagination and returns no more than 50 contacts on each page. Use \code{limit} and \code{offset} to set a different number of
@@ -63,7 +65,7 @@ uptimerobot.contacts <- function(api.key,
       )
       
       # Convert to proper datatypes
-      if("type" %in% fields.o) data.merged$type <- factor(as.integer(data.merged$type), levels=c(1,2,3,4,5,6,7,9,10,11), labels=c("SMS", "E-mail", "Twitter DM", "Boxcar", "Web-Hook", "Pushbullet", "Zapier", "Pushover", "Hipchat", "Slack"))
+      if("type" %in% fields.o) data.merged$type <- factor(as.integer(data.merged$type), levels=c(1, 2, 3, 4, 5, 6, 7, 9, 10, 11), labels=c("SMS", "Email", "Twitter DM", "Boxcar", "WebHook", "Pushbullet", "Zapier", "Pushover", "Hipchat", "Slack"))
       if("status" %in% fields.o) data.merged$status <- factor(as.integer(data.merged$status), levels=c(0, 1, 2), labels=c("not activated", "paused", "active"))
       
       if(!("id" %in% fields.o)) data.merged$id <- NULL

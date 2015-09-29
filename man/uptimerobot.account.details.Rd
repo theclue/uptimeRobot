@@ -2,18 +2,17 @@
 % Please edit documentation in R/uptimerobot.account.details.R
 \name{uptimerobot.account.details}
 \alias{uptimerobot.account.details}
-\title{Get the account details for the account linked to the given API key}
+\title{Get the account details for who is linked to the given API key}
 \usage{
 uptimerobot.account.details(api.key, unlist = FALSE)
 }
 \arguments{
-\item{api.key}{A valid key for connecting to UptimeRobors public API.}
+\item{api.key}{a string with a valid key for connecting to UptimeRobors public API.}
 
-\item{unlist}{Set to \code{TRUE} to unlist the output to a named vector, \code{FALSE} to get a named list.}
+\item{unlist}{logical. Set to \code{TRUE} to unlist the output to a named vector, \code{FALSE} to get a named list.}
 }
 \description{
 \code{uptimerobot.account.details} returns a list or a vector with the account details connected to the given api key.
-for the given monitors IDs.
 }
 \author{
 Gabriele Baldassarre
