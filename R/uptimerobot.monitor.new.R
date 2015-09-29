@@ -47,16 +47,20 @@ uptimerobot.monitor.new <- function(api.key,
                                     alert.contacts=NULL){
   
   # Decode monitor type
-  if(class(type) == "character"){
-    type <- as.numeric(factor(tolower(type), labels=1:4, levels=c("http", "keyword", "ping", "port")))
-  } else if(!(is.na(type)) & !(class(type) %in% c("integer", "numeric"))) stop(paste(class(type), "is not a valid format for monitor type", sep=" "))
+  if(!(is.null(type))) {
+    if(class(type) == "character"){
+      type <- as.numeric(as.character(factor(tolower(type), labels=c("1", "2", "3", "4"), levels=c("http", "keyword", "ping", "port"))))
+    } else if(!(is.na(type)) & !(class(type) %in% c("integer", "numeric"))) stop(paste(class(type), "cannot be coerced to express a monitor type", sep=" "))
+  }
   
   # Decode monitor subtype
   if(!(is.null(subtype))){
     if(class(subtype) == "character"){
-      subtype <- as.numeric(factor(toupper(subtype), labels=c(1,2,3,4,5,6,99), levels=c("HTTP", "HTTPS", "FTP", "SMTP", "POP3", "IMPAP", "Custom Port")))
-    } else if(!(class(subtype) %in% c("integer", "numeric"))) stop(paste0(class(subtype), "is not a valid format for monitor subtype", sep=" "))
+      subtype <- as.numeric(as.character(factor(toupper(subtype), labels=c("1", "2" ,"3", "4", "5" ,"6", "99"), levels=c("HTTP", "HTTPS", "FTP", "SMTP", "POP3", "IMPAP", "Custom Port"))))
+    } else if(!(class(subtype) %in% c("integer", "numeric"))) stop(paste0(class(subtype), "cannot be coerced to express a monitor subtype", sep=" "))
   }
+  
+  if(is.null(type) | is.na(type)) stop("monitor type missing or not recognized.")
   
   if(!(is.null(alert.contacts))){
     if(is.data.frame(alert.contacts)) {
@@ -77,7 +81,7 @@ uptimerobot.monitor.new <- function(api.key,
              "&monitorFriendlyName=", friendly.name,
              "&monitorURL=", URL,
              "&monitorType=", type,
-             ifelse(is.null(subtype), "", paste0("&monitorSubType", subtype, sep="=")),
+             ifelse(is.null(subtype) | is.na(subtype), "", paste0("&monitorSubType", subtype, sep="=")),
              ifelse(is.null(port), "", paste0("&monitorPort", port, sep="=")),
              "&monitorInterval=", interval,
              ifelse(is.null(keyword.type), "", paste0("&monitorKeywordType", keyword.type, sep="=")),
