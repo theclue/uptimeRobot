@@ -32,7 +32,7 @@
 #' @param activate logical to set the status of the monitor. Set to \code{TRUE} to start the monitor or \code{FALSE} to put it in paused state.
 #' @param subtype string used only for "Port monitoring" to set which pre-defined port/service is monitored or if a custom port is monitored. You can use both the friendly name (string) or the index (integer) here.
 #' @param port string used only for "Port monitoring" to set the port monitored.
-#' @param keyword,type required string in Keyword monitoring".
+#' @param keyword.type required string in Keyword monitoring".
 #' @param keyword.value string with the value of the keyword (required for keyword monitoring).
 #' @param HTTP.username string used for password-protected web pages (HTTP Basic Auth). Set to empty string to erase the current username. Available for HTTP and keyword monitoring.
 #' @param HTTP.password string used for password-protected web pages (HTTP Basic Auth). Set to empty string to erase the current password.Available for HTTP and keyword monitoring.
@@ -71,14 +71,14 @@ uptimerobot.monitor.edit <- function(api.key,
       if(!("threshold" %in% names(alert.contacts))) alert.contacts$threshold <- 0
       if(!("recurrence" %in% names(alert.contacts))) alert.contacts$recurrence <- 0
       
-      alert.contacts <- paste(alert.contacts$id, alert.contacts$threshold, alter.contacts$recurrence, sep="_")
+      alert.contacts <- paste(alert.contacts$id, alert.contacts$threshold, alert.contacts$recurrence, sep="_")
     }
     alert.contacts <- paste0(paste(alert.contacts$id, ifelse(is.na(alert.contacts$threshold), 0, alert.contacts$threshold), ifelse(is.na(alert.contacts$recurrence), 0, alert.contacts$recurrence), sep="_"), collapse="-")
     
   }
   
-  data <- fromJSON(
-    getURL(
+  data <- rjson::fromJSON(
+    RCurl::getURL(
       paste0("https://api.uptimerobot.com/editMonitor?apiKey=",
              api.key,
              "&monitorID=", id,

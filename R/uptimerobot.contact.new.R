@@ -34,8 +34,8 @@ uptimerobot.contact.new <- function(api.key,
   
   if(is.null(type) | is.na(type)) stop("contact type missing or not recognized.")
   
-  data <- fromJSON(
-    getURL(
+  data <- rjson::fromJSON(
+    RCurl::getURL(
       paste0("https://api.uptimerobot.com/newAlertContact?apiKey=",
              api.key,
              "&alertContactFriendlyName=", friendly.name,

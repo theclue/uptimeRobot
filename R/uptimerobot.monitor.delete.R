@@ -18,8 +18,8 @@
 uptimerobot.monitor.delete <- function(api.key, id){
   
   
-  data <- fromJSON(
-    getURL(
+  data <- rjson::fromJSON(
+    RCurl::getURL(
       paste0("https://api.uptimerobot.com/deleteMonitor?apiKey=",
              api.key,
              "&monitorID=", id,

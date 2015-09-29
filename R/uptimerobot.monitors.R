@@ -33,7 +33,7 @@
 #' @param monitors vector or comma-delimited string with the IDs of the monitors to get. If not used or set to \code{NULL}, will return all monitors in an account.
 #' @param summary list of logical values to flag summary indicators to add to the output dataset.
 #' @param types vector or comma-delimited string of monitor types. If not used or set to \code{NULL}, the function will return all monitors types (HTTP, keyword, ping..) in an account. Else, it is possible to define any number of monitor types. You can use both the friendly name (string) or the index (integer) here.
-#' @param statutes vector or comma-delimited string of monitor statutes. If not used or set to \code{NULL}, the function will return  all monitors statuses (up, down, paused) in an account. Else, it is possible to define any number of monitor statuses. You can use both the friendly name (string) or the index (integer) here.
+#' @param statuses vector or comma-delimited string of monitor statuses. If not used or set to \code{NULL}, the function will return  all monitors statuses (up, down, paused) in an account. Else, it is possible to define any number of monitor statuses. You can use both the friendly name (string) or the index (integer) here.
 #' @param search An optional keyword of to search within monitor URL or friendly name to get filtered results.
 #' @param limit An integer value used for pagination. Defines the max number of records to return in each page. Default and max. is 50.
 #' @param offset An integer value to set the index of the first monitor to get (used for pagination).
@@ -82,13 +82,13 @@ uptimerobot.monitors <- function(api.key,
     } else if(!(class(statuses) %in% c("integer", "numeric"))) stop(paste0(class(statuses), "cannot be coerced to express a monitor status attribute", sep=" "))
   }
    
-  data <- fromJSON(
-    getURL(
+  data <- rjson::fromJSON(
+    RCurl::getURL(
       paste0("https://api.uptimerobot.com/getMonitors?apiKey=",
              api.key,
              ifelse(is.null(monitors), "", paste0("&monitors=", paste0(unique(unlist(strsplit(monitors, split = ","))), collapse = "-"), sep="")),
              ifelse(is.null(types) | is.na(types), "", paste0("&types=", paste0(unique(types[!is.na(types)]), collapse = "-"), sep="")),
-             ifelse(is.null(statuses) | is.na(statuses), "", paste0("&statutes=", paste0(unique(statuses[!is.na(statuses)]), collapse = "-"), sep="")),
+             ifelse(is.null(statuses) | is.na(statuses), "", paste0("&statuses=", paste0(unique(statuses[!is.na(statuses)]), collapse = "-"), sep="")),
              ifelse(is.null(search), "", paste0("&search=", search, sep="")),
              "&responseTimes=", as.integer(include.responses),
              "&logs=", as.integer(include.logs),
@@ -103,7 +103,7 @@ uptimerobot.monitors <- function(api.key,
   if(data$stat=="ok") {
     return((function() {
       data.merged <- do.call(
-        rbind.fill,lapply(data$monitors$monitor, function(x) {
+        plyr::rbind.fill,lapply(data$monitors$monitor, function(x) {
           header <- do.call(data.frame, list(x[which(names(x) %in%  fields.v)], stringsAsFactors = FALSE))
           
           # Baking out the dataset
@@ -131,10 +131,10 @@ uptimerobot.monitors <- function(api.key,
       # Pagination
       if((as.integer(data$offset) + as.integer(data$limit)) >= as.integer(data$total)) return(data.merged)
       else {
-        rbind.fill(data.merged, uptimerobot.monitors(api.key = api.key, 
+        plyr::rbind.fill(data.merged, uptimerobot.monitors(api.key = api.key, 
                                                      monitors = monitors,
                                                      types = types,
-                                                     statutes = statutes,
+                                                     statuses = statuses,
                                                      summary = summary , 
                                                      limit = limit,
                                                      offset = as.character(as.integer(offset) + as.integer(limit)),

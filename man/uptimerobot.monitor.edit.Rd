@@ -26,6 +26,8 @@ uptimerobot.monitor.edit(api.key, id, friendly.name, URL, activate = TRUE,
 
 \item{interval}{integer with the interval for the monitoring check (in minutes).}
 
+\item{keyword.type}{required string in Keyword monitoring".}
+
 \item{keyword.value}{string with the value of the keyword (required for keyword monitoring).}
 
 \item{HTTP.username}{string used for password-protected web pages (HTTP Basic Auth). Set to empty string to erase the current username. Available for HTTP and keyword monitoring.}
@@ -33,8 +35,6 @@ uptimerobot.monitor.edit(api.key, id, friendly.name, URL, activate = TRUE,
 \item{HTTP.password}{string used for password-protected web pages (HTTP Basic Auth). Set to empty string to erase the current password.Available for HTTP and keyword monitoring.}
 
 \item{alert.contacts}{character vector or data frame with the IDs to alert each with their threshold and recurrence values.}
-
-\item{keyword,type}{required string in Keyword monitoring".}
 }
 \description{
 \code{uptimerobot.monitor.edit} edits the properties for an existing monitor.

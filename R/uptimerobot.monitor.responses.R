@@ -30,8 +30,8 @@ uptimerobot.monitor.responses <- function(api.key,
                                           offset=0){
 
   
-  data <- fromJSON(
-    getURL(
+  data <- rjson::fromJSON(
+    RCurl::getURL(
       paste0("https://api.uptimerobot.com/getMonitors?apiKey=",
              api.key,
              "&monitors=", paste0(unique(unlist(strsplit(monitors, split = ","))), collapse = "-"),
@@ -47,7 +47,7 @@ uptimerobot.monitor.responses <- function(api.key,
   if(data$stat=="ok") {
     return((function() {
       data.merged <- do.call(
-        rbind.fill,lapply(data$monitors$monitor, function(x) {
+        plyr::rbind.fill,lapply(data$monitors$monitor, function(x) {
           
           response.times <- do.call(rbind, lapply(x$responsetime, function(y){
              y$datetime <- strptime(y$datetime, format="%m/%d/%y %H:%M:%S", tz="GMT")
@@ -65,7 +65,7 @@ uptimerobot.monitor.responses <- function(api.key,
       # Pagination
       if((as.integer(data$offset) + as.integer(data$limit)) >= as.integer(data$total)) return(data.merged)
       else {
-        rbind.fill(data.merged, uptimerobot.monitor.responses(api.key = api.key, 
+        plyr::rbind.fill(data.merged, uptimerobot.monitor.responses(api.key = api.key, 
                                                      monitors = monitors, 
                                                      limit = limit,
                                                      offset = as.character(as.integer(offset) + as.integer(limit))))

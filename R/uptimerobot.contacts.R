@@ -43,8 +43,8 @@ uptimerobot.contacts <- function(api.key,
   fields.o <- unique(unlist(strsplit(fields, split = ",")))
   fields.v <- unique(c(unlist(strsplit(fields, split = ","))), "id")
 
-  data <- fromJSON(
-    getURL(
+  data <- rjson::fromJSON(
+    RCurl::getURL(
       paste0("https://api.uptimerobot.com/getAlertContacts?apiKey=",
              api.key,
              ifelse(is.null(contacts), "", paste0("&alertcontacts=", paste0(unique(unlist(strsplit(contacts, split = ","))), collapse = "-"), sep="")),
@@ -59,7 +59,7 @@ uptimerobot.contacts <- function(api.key,
   if(data$stat=="ok") {
     return((function() {
       data.merged <- do.call(
-        rbind.fill,lapply(data$alertcontacts$alertcontact, function(x) {
+        plyr::rbind.fill,lapply(data$alertcontacts$alertcontact, function(x) {
           return(do.call(data.frame, list(x[which(names(x) %in%  fields.v)], stringsAsFactors = FALSE)))
         })
       )
@@ -73,7 +73,7 @@ uptimerobot.contacts <- function(api.key,
       # Pagination
       if((as.integer(data$offset) + as.integer(data$limit)) >= as.integer(data$total)) return(data.merged)
       else {
-        rbind.fill(data.merged, uptimerobot.contacts(api.key = api.key, 
+        plyr::rbind.fill(data.merged, uptimerobot.contacts(api.key = api.key, 
                                                      contacts = contacts, 
                                                      limit = limit,
                                                      offset = as.character(as.integer(offset) + as.integer(limit)),

@@ -15,8 +15,8 @@
 #' 
 uptimerobot.account.details <- function(api.key, unlist = FALSE){
   
-  data <- fromJSON(
-    getURL(
+  data <- rjson::fromJSON(
+    RCurl::getURL(
       paste0("https://api.uptimerobot.com/getAccountDetails?apiKey=",
              api.key,
              "&format=json&noJsonCallback=1"

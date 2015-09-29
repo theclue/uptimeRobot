@@ -18,8 +18,8 @@
 uptimerobot.contact.delete <- function(api.key, id){
   
   
-  data <- fromJSON(
-    getURL(
+  data <- rjson::fromJSON(
+    RCurl::getURL(
       paste0("https://api.uptimerobot.com/deleteAlertContact?apiKey=",
              api.key,
              "&alertContactID=", id,

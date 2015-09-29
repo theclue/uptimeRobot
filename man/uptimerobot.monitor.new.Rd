@@ -23,6 +23,8 @@ uptimerobot.monitor.new(api.key, friendly.name, URL, type, subtype = NULL,
 
 \item{interval}{integer with the interval for the monitoring check (in minutes).}
 
+\item{keyword.type}{required string in Keyword monitoring".}
+
 \item{keyword.value}{string with the value of the keyword (required for keyword monitoring).}
 
 \item{HTTP.username}{string used for password-protected web pages (HTTP Basic Auth). Available for HTTP and keyword monitoring.}
@@ -30,8 +32,6 @@ uptimerobot.monitor.new(api.key, friendly.name, URL, type, subtype = NULL,
 \item{HTTP.password}{string used for password-protected web pages (HTTP Basic Auth). Available for HTTP and keyword monitoring.}
 
 \item{alert.contacts}{character vector or data frame with the IDs to alert each with their threshold and recurrence values.}
-
-\item{keyword,type}{required string in Keyword monitoring".}
 }
 \description{
 \code{uptimerobot.monitor.new} creates a new monitor with the given properties.

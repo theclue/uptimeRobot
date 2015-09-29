@@ -15,6 +15,8 @@ uptimerobot.monitors(api.key, monitors = NULL, types = NULL,
 
 \item{types}{vector or comma-delimited string of monitor types. If not used or set to \code{NULL}, the function will return all monitors types (HTTP, keyword, ping..) in an account. Else, it is possible to define any number of monitor types. You can use both the friendly name (string) or the index (integer) here.}
 
+\item{statuses}{vector or comma-delimited string of monitor statuses. If not used or set to \code{NULL}, the function will return  all monitors statuses (up, down, paused) in an account. Else, it is possible to define any number of monitor statuses. You can use both the friendly name (string) or the index (integer) here.}
+
 \item{search}{An optional keyword of to search within monitor URL or friendly name to get filtered results.}
 
 \item{summary}{list of logical values to flag summary indicators to add to the output dataset.}
@@ -25,8 +27,6 @@ uptimerobot.monitors(api.key, monitors = NULL, types = NULL,
 
 \item{fields}{vector or comma-delimited string with the general informations to include in the output dataset.
 You may use the helper function \code{\link{uptimerobot.fields}} if you don't want to manually compile the list of fields.}
-
-\item{statutes}{vector or comma-delimited string of monitor statutes. If not used or set to \code{NULL}, the function will return  all monitors statuses (up, down, paused) in an account. Else, it is possible to define any number of monitor statuses. You can use both the friendly name (string) or the index (integer) here.}
 }
 \description{
 \code{uptimerobots.monitors.responses} return a dataset with general informations
