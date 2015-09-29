@@ -11,6 +11,9 @@ uptimerobot.account.details(api.key, unlist = FALSE)
 
 \item{unlist}{logical. Set to \code{TRUE} to unlist the output to a named vector, \code{FALSE} to get a named list.}
 }
+\value{
+A list or a cector with the account details.
+}
 \description{
 \code{uptimerobot.account.details} returns a list or a vector with the account details connected to the given api key.
 }
