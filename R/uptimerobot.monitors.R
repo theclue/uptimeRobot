@@ -68,7 +68,7 @@ uptimerobot.monitors <- function(api.key,
   if(!(is.null(types))){
     if(class(types) == "character"){
       types <- unlist(strsplit(types, split = ","))
-      if(suppressWarnings(all(is.na(as.numeric(types))))) types <- as.numeric(factor(tolower(types), labels=1:4, levels=c("http", "keyword", "ping", "port")))
+      if(suppressWarnings(all(is.na(as.numeric(types))))) types <- as.numeric(as.character(factor(tolower(types), labels=c("1", "2", "3", "4"), levels=c("http", "keyword", "ping", "port"))))
       else types <- as.numeric(types)
     } else if(!(class(types) %in% c("integer", "numeric"))) stop(paste0(class(types), "cannot be coerced to express a monitor status type", sep=" "))
   }
@@ -77,7 +77,7 @@ uptimerobot.monitors <- function(api.key,
   if(!(is.null(statuses))){
     if(class(statuses) == "character"){
       statuses <- unlist(strsplit(statuses, split = ","))
-      if(suppressWarnings(all(is.na(as.numeric(statuses))))) statuses <- as.numeric(factor(tolower(statuses), labels=c(0, 1, 2, 8, 9), levels=c("paused", "not checked yet", "up", "seems down", "down")))
+      if(suppressWarnings(all(is.na(as.numeric(statuses))))) statuses <- as.numeric(as.character(factor(tolower(statuses), labels=c("0", "1", "2", "8", "9"), levels=c("paused", "not checked yet", "up", "seems down", "down"))))
       else statuses <- as.numeric(statuses)
     } else if(!(class(statuses) %in% c("integer", "numeric"))) stop(paste0(class(statuses), "cannot be coerced to express a monitor status attribute", sep=" "))
   }
