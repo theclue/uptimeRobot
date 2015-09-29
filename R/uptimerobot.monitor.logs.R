@@ -13,14 +13,12 @@
 
 #' @author
 #' Gabriele Baldassarre
+#' 
 #' @seealso \code{\link{uptimerobot.monitors}}, \code{\link{uptimerobot.monitor.responses}}, \code{\link{uptimerobot.monitor.contacts}}
 #'
 #' @param api.key A valid key for connecting to UptimeRobors public API.
-#' 
 #' @param monitors vector or comma-delimited string with the IDs of the monitors to get.
-#' 
 #' @param limit An integer value used for pagination. Defines the max number of records to return in each page. Default and max. is 50.
-#' 
 #' @param offset An integer value to set the index of the first monitor to get (used for pagination).
 #'
 uptimerobot.monitor.logs <- function(api.key, 

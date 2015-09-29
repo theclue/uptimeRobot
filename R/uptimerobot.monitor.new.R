@@ -23,7 +23,7 @@
 #' @param api.key string with a valid key for connecting to Uptimerobot API.
 #' @param friendly.name string the friendly (screen) name of the monitor.
 #' @param URL string with the URL/IP of the monitor.
-#' @param type string or integer with the type of the monitor. You can use both the friendly name (string)or the index (integer) here.
+#' @param type string or integer with the type of the monitor. You can use both the friendly name (string) or the index (integer) here.
 #' @param subtype string used only for "Port monitoring" to set which pre-defined port/service is monitored or if a custom port is monitored. You can use both the friendly name (string) or the index (integer) here.
 #' @param port string used only for "Port monitoring" to set the port monitored.
 #' @param keyword,type required string in Keyword monitoring".
@@ -37,14 +37,14 @@ uptimerobot.monitor.new <- function(api.key,
                                     friendly.name,
                                     URL,
                                     type,
-                                    subtype=NA,
-                                    port=NA,
+                                    subtype=NULL,
+                                    port=NULL,
                                     interval=5,
-                                    keyword.type=NA,
-                                    keyword.value=NA,
-                                    HTTP.username=NA,
-                                    HTTP.password=NA,
-                                    alert.contacts=NA){
+                                    keyword.type=NULL,
+                                    keyword.value=NULL,
+                                    HTTP.username=NULL,
+                                    HTTP.password=NULL,
+                                    alert.contacts=NULL){
   
   # Decode monitor type
   if(class(type) == "character"){
@@ -52,12 +52,19 @@ uptimerobot.monitor.new <- function(api.key,
   } else if(!(is.na(type)) & !(class(type) %in% c("integer", "numeric"))) stop(paste(class(type), "is not a valid format for monitor type", sep=" "))
   
   # Decode monitor subtype
+<<<<<<< HEAD
   if(class(subtype) == "character"){
     subtype <- as.numeric(factor(toupper(subtype), labels=c(1,2,3,4,5,6,99), levels=c("HTTP", "HTTPS", "FTP", "SMTP", "POP3", "IMPAP", "Custom Port")))
     } else if(!(is.na(subtype)) & !(class(subtype) %in% c("integer", "numeric"))) stop(paste(class(subtype), "is not a valid format for monitor subtype", sep=" "))
+=======
+  if(!(is.null(subtype))){
+    if(class(subtype) == "character"){
+      subtype <- as.numeric(factor(toupper(subtype), labels=c(1,2,3,4,5,6,99), levels=c("HTTP", "HTTPS", "FTP", "SMTP", "POP3", "IMPAP", "Custom Port")))
+    } else if(!(class(subtype) %in% c("integer", "numeric"))) stop(paste0(class(subtype), "is not a valid format for monitor subtype", sep=" "))
+  }
+>>>>>>> 87b9fbf1e12e231c97b0fce41789bcb4aadbb0f0
   
-  
-  if(!(is.na(alert.contacts))){
+  if(!(is.null(alert.contacts))){
     if(is.data.frame(alert.contacts)) {
       
       if(!("threshold" %in% names(alert.contacts))) alert.contacts$threshold <- 0
@@ -76,14 +83,14 @@ uptimerobot.monitor.new <- function(api.key,
              "&monitorFriendlyName=", friendly.name,
              "&monitorURL=", URL,
              "&monitorType=", type,
-             ifelse(is.na(subtype), "", paste0("&monitorSubType", subtype, sep="=")),
-             ifelse(is.na(port), "", paste0("&monitorPort", port, sep="=")),
+             ifelse(is.null(subtype), "", paste0("&monitorSubType", subtype, sep="=")),
+             ifelse(is.null(port), "", paste0("&monitorPort", port, sep="=")),
              "&monitorInterval=", interval,
-             ifelse(is.na(keyword.type), "", paste0("&monitorKeywordType", keyword.type, sep="=")),
-             ifelse(is.na(keyword.value), "", paste0("&monitorKeywordValue", keyword.value, sep="=")),
-             ifelse(is.na(HTTP.username), "", paste0("&monitorHTTPUsername", HTTP.username, sep="=")),
-             ifelse(is.na(HTTP.password), "", paste0("&monitorHTTPPassword", HTTP.password, sep="=")),
-             ifelse(is.na(alert.contacts), "", paste0("&monitorAlertContacts", alert.contacts, sep="=")),
+             ifelse(is.null(keyword.type), "", paste0("&monitorKeywordType", keyword.type, sep="=")),
+             ifelse(is.null(keyword.value), "", paste0("&monitorKeywordValue", keyword.value, sep="=")),
+             ifelse(is.null(HTTP.username), "", paste0("&monitorHTTPUsername", HTTP.username, sep="=")),
+             ifelse(is.null(HTTP.password), "", paste0("&monitorHTTPPassword", HTTP.password, sep="=")),
+             ifelse(is.null(alert.contacts), "", paste0("&monitorAlertContacts", alert.contacts, sep="=")),
              "&format=json&noJsonCallback=1"
       )      
     ),

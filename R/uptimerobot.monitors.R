@@ -30,30 +30,21 @@
 #' @seealso \code{\link{uptimerobot.monitor.responses}}, \code{\link{uptimerobot.monitor.logs}}, \code{\link{uptimerobot.monitor.contacts}}
 #'
 #' @param api.key A valid key for connecting to UptimeRobors public API.
-#' 
-#' @param monitors vector or comma-delimited string with the IDs of the monitors to get.
-#' If the argument is missing or NA, all the available monitors will be returned. 
-#'
+#' @param monitors vector or comma-delimited string with the IDs of the monitors to get. If not used or set to \code{NULL}, will return all monitors in an account.
 #' @param summary list of logical values to flag summary indicators to add to the output dataset.
-#' 
-#' @param types vector or comma-delimited string of monitor types. If not \code{NA}, the function will return all monitors types (HTTP, keyword, ping..) in an account. Else, it is possible to define any number of monitor types.
-#' 
-#' @param statutes vector or comma-delimited string of monitor statutes. If not \code{NA}, the function will return  all monitors statuses (up, down, paused) in an account. Else, it is possible to define any number of monitor statuses.
-#'
-#' @param search An optional keyword of to search within monitor.url and monitor.friendly.name to get filtered results.
-#'        
+#' @param types vector or comma-delimited string of monitor types. If not used or set to \code{NULL}, the function will return all monitors types (HTTP, keyword, ping..) in an account. Else, it is possible to define any number of monitor types. You can use both the friendly name (string) or the index (integer) here.
+#' @param statutes vector or comma-delimited string of monitor statutes. If not used or set to \code{NULL}, the function will return  all monitors statuses (up, down, paused) in an account. Else, it is possible to define any number of monitor statuses. You can use both the friendly name (string) or the index (integer) here.
+#' @param search An optional keyword of to search within monitor URL or friendly name to get filtered results.
 #' @param limit An integer value used for pagination. Defines the max number of records to return in each page. Default and max. is 50.
-#' 
 #' @param offset An integer value to set the index of the first monitor to get (used for pagination).
-#'
 #' @param fields vector or comma-delimited string with the general informations to include in the output dataset.
 #' You may use the helper function \code{\link{uptimerobot.fields}} if you don't want to manually compile the list of fields.
 #'
 uptimerobot.monitors <- function(api.key, 
-                                 monitors=NA,
-                                 types=NA,
-                                 statuses=NA,
-                                 search=NA,
+                                 monitors=NULL,
+                                 types=NULL,
+                                 statuses=NULL,
+                                 search=NULL,
                                  summary=list(),
                                  limit=50,
                                  offset=0,
@@ -73,14 +64,32 @@ uptimerobot.monitors <- function(api.key,
   include.logs <- include.stat("log.records")
   include.contacts <- include.stat("alert.contacts")
   
+  # Decode monitor types
+  if(!(is.null(types))){
+    if(class(types) == "character"){
+      types <- unlist(strsplit(types, split = ","))
+      if(suppressWarnings(all(is.na(as.numeric(types))))) types <- as.numeric(factor(tolower(types), labels=1:4, levels=c("http", "keyword", "ping", "port")))
+      else types <- as.numeric(types)
+    } else if(!(class(types) %in% c("integer", "numeric"))) stop(paste0(class(types), "cannot be coerced to express a monitor status type", sep=" "))
+  }
+  
+  # Decode monitor statuses
+  if(!(is.null(statuses))){
+    if(class(statuses) == "character"){
+      statuses <- unlist(strsplit(statuses, split = ","))
+      if(suppressWarnings(all(is.na(as.numeric(statuses))))) statuses <- as.numeric(factor(tolower(statuses), labels=c(0, 1, 2, 8, 9), levels=c("paused", "not checked yet", "up", "seems down", "down")))
+      else statuses <- as.numeric(statuses)
+    } else if(!(class(statuses) %in% c("integer", "numeric"))) stop(paste0(class(statuses), "cannot be coerced to express a monitor status attribute", sep=" "))
+  }
+  
   data <- fromJSON(
     getURL(
       paste0("https://api.uptimerobot.com/getMonitors?apiKey=",
              api.key,
-             ifelse(is.na(monitors), "", paste0("&monitors=", paste0(unique(unlist(strsplit(monitors, split = ","))), collapse = "-"), sep="")),
-             ifelse(is.na(types), "", paste0("&types=", paste0(unique(unlist(strsplit(types, split = ","))), collapse = "-"), sep="")),
-             ifelse(is.na(statuses), "", paste0("&statutes=", paste0(unique(unlist(strsplit(statutes, split = ","))), collapse = "-"), sep="")),
-             ifelse(is.na(search), "", paste0("&search=", search, sep="")),
+             ifelse(is.null(monitors), "", paste0("&monitors=", paste0(unique(unlist(strsplit(monitors, split = ","))), collapse = "-"), sep="")),
+             ifelse(is.null(types), "", paste0("&types=", paste0(unique(types), collapse = "-"), sep="")),
+             ifelse(is.null(statuses), "", paste0("&statutes=", paste0(unique(statuses), collapse = "-"), sep="")),
+             ifelse(is.null(search), "", paste0("&search=", search, sep="")),
              "&responseTimes=", as.integer(include.responses),
              "&logs=", as.integer(include.logs),
              "&showMonitorAlertContacts=", as.integer(include.contacts),
