@@ -1,7 +1,7 @@
 Package: uptimeRobot
 Type: Package
 Version: 0.2
-Title: R interface for UptimeRobot ping service
+Title: R interface for Uptimerobot ping service
 Description: This package wraps all the endpoints of Uptimerobot online Ping service API.
 Authors@R: person("Gabriele", "Baldassarre", role = c("aut", "cre"), email = "gabriele@gabrielebaldassarre.com")
 Author: Gabriele Baldassarre <gabriele@gabrielebaldassarre.com>

@@ -1,10 +1,5 @@
-#' @rdname uptimerobot.monitors
-#' @export
+#' Get general informations about monitors
 #'
-#' @title 
-#' Get general informations for one or more monitors
-#'
-#' @description
 #' \code{uptimerobots.monitors.responses} return a dataset with general informations
 #' for a set of monitors.
 #' 
@@ -24,9 +19,11 @@
 #'
 #' The API uses pagination and returns no more than 50 monitors on each page. Use \code{limit} and \code{offset} to set a different number of
 #' monitors to get on each page and to move between pages. Leave default values to get all the data.
-#'
-#' @author
-#' Gabriele Baldassarre
+#' 
+#' @return
+#' A dataset with general informations about the given monitors
+#' 
+#' @author Gabriele Baldassarre
 #' @seealso \code{\link{uptimerobot.monitor.responses}}, \code{\link{uptimerobot.monitor.logs}}, \code{\link{uptimerobot.monitor.contacts}}
 #'
 #' @param api.key A valid key for connecting to UptimeRobors public API.
@@ -39,7 +36,11 @@
 #' @param offset An integer value to set the index of the first monitor to get (used for pagination).
 #' @param fields vector or comma-delimited string with the general informations to include in the output dataset.
 #' You may use the helper function \code{\link{uptimerobot.fields}} if you don't want to manually compile the list of fields.
-#'
+#' 
+#' @importFrom RCurl getURL
+#' @importFrom rjson fromJSON
+#' @importFrom plyr rbind.fill
+#' @export 
 uptimerobot.monitors <- function(api.key, 
                                  monitors=NULL,
                                  types=NULL,
@@ -82,8 +83,8 @@ uptimerobot.monitors <- function(api.key,
     } else if(!(class(statuses) %in% c("integer", "numeric"))) stop(paste0(class(statuses), "cannot be coerced to express a monitor status attribute", sep=" "))
   }
    
-  data <- rjson::fromJSON(
-    RCurl::getURL(
+  data <- fromJSON(
+    getURL(
       paste0("https://api.uptimerobot.com/getMonitors?apiKey=",
              api.key,
              ifelse(is.null(monitors), "", paste0("&monitors=", paste0(unique(unlist(strsplit(monitors, split = ","))), collapse = "-"), sep="")),
@@ -103,7 +104,7 @@ uptimerobot.monitors <- function(api.key,
   if(data$stat=="ok") {
     return((function() {
       data.merged <- do.call(
-        plyr::rbind.fill,lapply(data$monitors$monitor, function(x) {
+        rbind.fill,lapply(data$monitors$monitor, function(x) {
           header <- do.call(data.frame, list(x[which(names(x) %in%  fields.v)], stringsAsFactors = FALSE))
           
           # Baking out the dataset
@@ -131,7 +132,7 @@ uptimerobot.monitors <- function(api.key,
       # Pagination
       if((as.integer(data$offset) + as.integer(data$limit)) >= as.integer(data$total)) return(data.merged)
       else {
-        plyr::rbind.fill(data.merged, uptimerobot.monitors(api.key = api.key, 
+        rbind.fill(data.merged, uptimerobot.monitors(api.key = api.key, 
                                                      monitors = monitors,
                                                      types = types,
                                                      statuses = statuses,

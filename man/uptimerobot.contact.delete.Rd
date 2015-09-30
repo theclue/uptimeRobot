@@ -11,10 +11,11 @@ uptimerobot.contact.delete(api.key, id)
 
 \item{id}{numeric or integer with the ID of the contact to delete.}
 }
-\description{
-\code{uptimerobot.contact.delete} remove an alert contanct, unlinking from all the registered monitors.
-
+\value{
 The function returns \code{TRUE} in case success. An error is thrown otherwise.
+}
+\description{
+\code{uptimerobot.contact.delete} removes an alert contanct, unlinking from all the registered monitors.
 }
 \author{
 Gabriele Baldassarre

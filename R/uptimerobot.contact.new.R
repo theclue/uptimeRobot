@@ -1,25 +1,22 @@
-#' @rdname uptimerobot.contact.new
-#' @export
-#'
-#' @title 
 #' Add a new alert contact
 #'
-#' @description
 #' \code{uptimerobot.contact.new} creates a new alert contact with the given properties.
 #' 
 #' @details
 #' The alert contacts are whom to be notified when the monitor goes up/down. 
 #' 
-#' The function returns the ID of the newly created contact in case success. An error is thrown otherwise.
+#' @return The function returns the ID of the newly created contact in case success. An error is thrown otherwise.
 #' 
-#' @author
-#' Gabriele Baldassarre
+#' @author Gabriele Baldassarre
 #' 
 #' @param api.key string with a valid key for connecting to Uptimerobot API.
 #' @param type string or integer with the type of the contact. You can use both the friendly name (string) or the index (integer) here.
 #' @param value string with the value of the contact (ie. the email address).
 #' @param friendly.name string the friendly (screen) name of the contact.
-#'
+#' 
+#' @importFrom RCurl getURL
+#' @importFrom rjson fromJSON
+#' @export 
 uptimerobot.contact.new <- function(api.key,
                                     type,
                                     value,
@@ -34,8 +31,8 @@ uptimerobot.contact.new <- function(api.key,
   
   if(is.null(type) | is.na(type)) stop("contact type missing or not recognized.")
   
-  data <- rjson::fromJSON(
-    RCurl::getURL(
+  data <- fromJSON(
+    getURL(
       paste0("https://api.uptimerobot.com/newAlertContact?apiKey=",
              api.key,
              "&alertContactFriendlyName=", friendly.name,

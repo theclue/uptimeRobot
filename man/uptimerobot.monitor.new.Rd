@@ -33,12 +33,13 @@ uptimerobot.monitor.new(api.key, friendly.name, URL, type, subtype = NULL,
 
 \item{alert.contacts}{character vector or data frame with the IDs to alert each with their threshold and recurrence values.}
 }
+\value{
+A numeric with the ID of the newly created monitor in case of success. An error is thrown otherwise.
+}
 \description{
 \code{uptimerobot.monitor.new} creates a new monitor with the given properties.
 }
 \details{
-The function returns the ID of the newly created monitor in case success. An error is thrown otherwise.
-
 The alert contacts are whom to be notified when the monitor goes up/down.
 
 Multiple alert contact IDs can be sent in a character vector or in a data frame. If you pass alert contact IDs in a vector, each element must be formatted in the form \code{<id>_<threshold>_<recurrence>} (note the underscores).

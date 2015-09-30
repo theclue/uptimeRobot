@@ -15,13 +15,14 @@ uptimerobot.contact.new(api.key, type, value, friendly.name)
 
 \item{friendly.name}{string the friendly (screen) name of the contact.}
 }
+\value{
+The function returns the ID of the newly created contact in case success. An error is thrown otherwise.
+}
 \description{
 \code{uptimerobot.contact.new} creates a new alert contact with the given properties.
 }
 \details{
 The alert contacts are whom to be notified when the monitor goes up/down.
-
-The function returns the ID of the newly created contact in case success. An error is thrown otherwise.
 }
 \author{
 Gabriele Baldassarre

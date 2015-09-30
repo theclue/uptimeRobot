@@ -36,14 +36,15 @@ uptimerobot.monitor.edit(api.key, id, friendly.name, URL, activate = TRUE,
 
 \item{alert.contacts}{character vector or data frame with the IDs to alert each with their threshold and recurrence values.}
 }
+\value{
+The function returns \code{TRUE} in case success. An error is thrown otherwise.
+}
 \description{
 \code{uptimerobot.monitor.edit} edits the properties for an existing monitor.
 }
 \details{
 If a property has not to be updated, just omit it from the parameters or set to \code{NA}.
 To erase the value of a property, set it to an empty string, ie \code{""}, instead (not \code{NA} or \code{NULL}!).
-
-The function returns \code{TRUE} in case success. An error is thrown otherwise.
 
 The type of a monitor can not be edited (like changing a HTTP monitor into a Port monitor).
 

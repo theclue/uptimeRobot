@@ -1,20 +1,18 @@
-#' @rdname uptimerobot.monitor.reset
-#' @export
-#'
-#' @title 
 #' Delete a monitor
 #'
-#' @description
 #' \code{uptimerobot.monitor.reset} remove all the statistics and logs associated to a monitor ID.
 #' 
+#' @return
 #' The function returns \code{TRUE} in case success. An error is thrown otherwise.
 #'  
-#' @author
-#' Gabriele Baldassarre
+#' @author Gabriele Baldassarre
 #' 
 #' @param api.key string with a valid key for connecting to Uptimerobot API.
 #' @param id numeric or integer with the ID of the monitor to delete.
 #' 
+#' @importFrom RCurl getURL
+#' @importFrom rjson fromJSON
+#' @export 
 uptimerobot.monitor.reset <- function(api.key, id){
   
   

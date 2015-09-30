@@ -1,12 +1,7 @@
-#' @rdname uptimerobot.contacts
-#' @export
-#'
-#' @title 
 #' Get general informations about the alert contacts
 #'
-#' @description
-#' \code{uptimerobot.contacts} return a dataset with general informations
-#' for a set of contacts used to be alert in case of uptimerobot events.
+#' \code{uptimerobot.contacts} extracts a dataset with general informations
+#' for a set of contacts used to be alert in case of up/down of the given monitors.
 #' 
 #' @details 
 #' The alert contacts are whom to be notified when the monitor goes up/down. 
@@ -16,22 +11,24 @@
 #' The API uses pagination and returns no more than 50 contacts on each page. Use \code{limit} and \code{offset} to set a different number of
 #' monitors to get on each page and to move between pages. Leave default values to get all the data.
 #' 
-#' @author
-#' Gabriele Baldassarre
+#' @return A dataset with general informations about the contacts.
+#' 
+#' @author Gabriele Baldassarre
+#' 
 #' @seealso \code{\link{uptimerobot.monitors}}
 #'
 #' @param api.key A valid key for connecting to UptimeRobors public API.
-#' 
 #' @param contacts vector or comma-delimited string with the IDs of the contacts to get.
-#' If the argument is missing or NA, all the available monitors will be returned. 
-#'
+#' If the argument is NULL or missing, all the available monitors will be returned. 
 #' @param fields vector or comma-delimited string with the general informations to include in the output dataset.
 #' You may use the helper function \code{\link{uptimerobot.fields}} if you don't want to manually compile the list of fields.
-#' 
 #' @param limit An integer value used for pagination. Defines the max number of records to return in each page. Default and max. is 50.
-#' 
 #' @param offset An integer value to set the index of the first monitor to get (used for pagination).
-#'
+#' 
+#' @importFrom RCurl getURL
+#' @importFrom rjson fromJSON
+#' @importFrom plyr rbind.fill
+#' @export 
 uptimerobot.contacts <- function(api.key, 
                                   contacts=NULL,
                                   limit=50,
@@ -43,8 +40,8 @@ uptimerobot.contacts <- function(api.key,
   fields.o <- unique(unlist(strsplit(fields, split = ",")))
   fields.v <- unique(c(unlist(strsplit(fields, split = ","))), "id")
 
-  data <- rjson::fromJSON(
-    RCurl::getURL(
+  data <- fromJSON(
+    getURL(
       paste0("https://api.uptimerobot.com/getAlertContacts?apiKey=",
              api.key,
              ifelse(is.null(contacts), "", paste0("&alertcontacts=", paste0(unique(unlist(strsplit(contacts, split = ","))), collapse = "-"), sep="")),
@@ -59,7 +56,7 @@ uptimerobot.contacts <- function(api.key,
   if(data$stat=="ok") {
     return((function() {
       data.merged <- do.call(
-        plyr::rbind.fill,lapply(data$alertcontacts$alertcontact, function(x) {
+        rbind.fill,lapply(data$alertcontacts$alertcontact, function(x) {
           return(do.call(data.frame, list(x[which(names(x) %in%  fields.v)], stringsAsFactors = FALSE)))
         })
       )
@@ -73,7 +70,7 @@ uptimerobot.contacts <- function(api.key,
       # Pagination
       if((as.integer(data$offset) + as.integer(data$limit)) >= as.integer(data$total)) return(data.merged)
       else {
-        plyr::rbind.fill(data.merged, uptimerobot.contacts(api.key = api.key, 
+        rbind.fill(data.merged, uptimerobot.contacts(api.key = api.key, 
                                                      contacts = contacts, 
                                                      limit = limit,
                                                      offset = as.character(as.integer(offset) + as.integer(limit)),

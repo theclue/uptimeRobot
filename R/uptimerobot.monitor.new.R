@@ -1,15 +1,8 @@
-#' @rdname uptimerobot.monitor.new
-#' @export
-#'
-#' @title 
 #' Add a new monitor
 #'
-#' @description
 #' \code{uptimerobot.monitor.new} creates a new monitor with the given properties.
 #' 
 #' @details
-#' The function returns the ID of the newly created monitor in case success. An error is thrown otherwise.
-#' 
 #' The alert contacts are whom to be notified when the monitor goes up/down.
 #' 
 #' Multiple alert contact IDs can be sent in a character vector or in a data frame. If you pass alert contact IDs in a vector, each element must be formatted in the form \code{<id>_<threshold>_<recurrence>} (note the underscores).
@@ -17,8 +10,10 @@
 #' 
 #' Please note that thresholds and recurrences can be omitted (default to zero) and, as they are only available in the Pro Plan, they are always 0 in the Free Plan.
 #' 
-#' @author
-#' Gabriele Baldassarre
+#' @return
+#' A numeric with the ID of the newly created monitor in case of success. An error is thrown otherwise.
+#' 
+#' @author Gabriele Baldassarre
 #' 
 #' @param api.key string with a valid key for connecting to Uptimerobot API.
 #' @param friendly.name string the friendly (screen) name of the monitor.
@@ -32,7 +27,10 @@
 #' @param HTTP.password string used for password-protected web pages (HTTP Basic Auth). Available for HTTP and keyword monitoring.
 #' @param alert.contacts character vector or data frame with the IDs to alert each with their threshold and recurrence values.
 #' @param interval integer with the interval for the monitoring check (in minutes).
-#'
+#' 
+#' @importFrom RCurl getURL
+#' @importFrom rjson fromJSON
+#' @export 
 uptimerobot.monitor.new <- function(api.key,
                                     friendly.name,
                                     URL,
@@ -74,8 +72,8 @@ uptimerobot.monitor.new <- function(api.key,
     
   }
   
-  data <- rjson::fromJSON(
-    RCurl::getURL(
+  data <- fromJSON(
+    getURL(
       paste0("https://api.uptimerobot.com/newMonitor?apiKey=",
              api.key,
              "&monitorFriendlyName=", friendly.name,

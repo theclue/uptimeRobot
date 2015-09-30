@@ -1,29 +1,26 @@
-#' @rdname uptimerobot.monitor.responses
-#' @export
-#'
-#' @title 
 #' Get response times for one or more monitors
 #'
-#' @description
 #' \code{uptimerobot.monitor.responses} returns a dataset with all the response times
 #' for the given monitors IDs.
 #' 
 #' The API uses pagination and returns no more than 50 monitors on each page. Use \code{limit} and \code{offset} to set a different number of
 #' monitors to get on each page and to move between pages. Leave default values to get all the data.
 #' 
-#' @author
-#' Gabriele Baldassarre
+#' @return A dataset with the response times for the given monitors.
+#' 
+#' @author Gabriele Baldassarre
 #' 
 #' @seealso \code{\link{uptimerobot.monitors}}, \code{\link{uptimerobot.monitor.logs}}, \code{\link{uptimerobot.monitor.contacts}}
 #'
 #' @param api.key A valid key for connecting to UptimeRobors public API.
-#' 
 #' @param monitors vector or comma-delimited string with the IDs of the monitors to get.
-#' 
 #' @param limit An integer value used for pagination. Defines the max number of records to return in each page. Default and max. is 50.
-#' 
 #' @param offset An integer value to set the index of the first monitor to get (used for pagination).
-#'
+#' 
+#' @importFrom RCurl getURL
+#' @importFrom rjson fromJSON
+#' @importFrom plyr rbind.fill
+#' @export 
 uptimerobot.monitor.responses <- function(api.key, 
                                           monitors,
                                           limit=50,

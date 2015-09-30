@@ -11,10 +11,11 @@ uptimerobot.monitor.reset(api.key, id)
 
 \item{id}{numeric or integer with the ID of the monitor to delete.}
 }
+\value{
+The function returns \code{TRUE} in case success. An error is thrown otherwise.
+}
 \description{
 \code{uptimerobot.monitor.reset} remove all the statistics and logs associated to a monitor ID.
-
-The function returns \code{TRUE} in case success. An error is thrown otherwise.
 }
 \author{
 Gabriele Baldassarre

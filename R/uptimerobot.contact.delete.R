@@ -4,8 +4,7 @@
 #' 
 #' @return The function returns \code{TRUE} in case success. An error is thrown otherwise.
 #'  
-#' @author
-#' Gabriele Baldassarre
+#' @author Gabriele Baldassarre
 #' 
 #' @param api.key string with a valid key for connecting to Uptimerobot API.
 #' @param id numeric or integer with the ID of the contact to delete.

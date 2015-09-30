@@ -11,7 +11,7 @@ uptimerobot.contacts(api.key, contacts = NULL, limit = 50, offset = 0,
 \item{api.key}{A valid key for connecting to UptimeRobors public API.}
 
 \item{contacts}{vector or comma-delimited string with the IDs of the contacts to get.
-If the argument is missing or NA, all the available monitors will be returned.}
+If the argument is NULL or missing, all the available monitors will be returned.}
 
 \item{limit}{An integer value used for pagination. Defines the max number of records to return in each page. Default and max. is 50.}
 
@@ -20,9 +20,12 @@ If the argument is missing or NA, all the available monitors will be returned.}
 \item{fields}{vector or comma-delimited string with the general informations to include in the output dataset.
 You may use the helper function \code{\link{uptimerobot.fields}} if you don't want to manually compile the list of fields.}
 }
+\value{
+A dataset with general informations about the contacts.
+}
 \description{
-\code{uptimerobot.contacts} return a dataset with general informations
-for a set of contacts used to be alert in case of uptimerobot events.
+\code{uptimerobot.contacts} extracts a dataset with general informations
+for a set of contacts used to be alert in case of up/down of the given monitors.
 }
 \details{
 The alert contacts are whom to be notified when the monitor goes up/down.

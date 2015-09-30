@@ -1,17 +1,10 @@
-#' @rdname uptimerobot.monitor.edit
-#' @export
-#'
-#' @title 
 #' Edit a monitor
 #'
-#' @description
 #' \code{uptimerobot.monitor.edit} edits the properties for an existing monitor.
 #' 
 #' @details
 #' If a property has not to be updated, just omit it from the parameters or set to \code{NA}.
 #' To erase the value of a property, set it to an empty string, ie \code{""}, instead (not \code{NA} or \code{NULL}!).
-#' 
-#' The function returns \code{TRUE} in case success. An error is thrown otherwise.
 #' 
 #' The type of a monitor can not be edited (like changing a HTTP monitor into a Port monitor).
 #'  
@@ -21,9 +14,11 @@
 #' If you prefer to format it as a data.frame, it must have these three columns: \code{id, threshold, recurrence}, numeric or integer. Order of the columns doesn't matter.
 #' 
 #' Please note that thresholds and recurrences can be omitted (default to zero) and, as they are only available in the Pro Plan, they are always 0 in the Free Plan.
+#'
+#' @return 
+#' The function returns \code{TRUE} in case success. An error is thrown otherwise.  
 #'  
-#' @author
-#' Gabriele Baldassarre
+#' @author Gabriele Baldassarre
 #' 
 #' @param api.key string with a valid key for connecting to Uptimerobot API.
 #' @param id numeric or integer with the ID of the monitor to edit.
@@ -38,7 +33,10 @@
 #' @param HTTP.password string used for password-protected web pages (HTTP Basic Auth). Set to empty string to erase the current password.Available for HTTP and keyword monitoring.
 #' @param alert.contacts character vector or data frame with the IDs to alert each with their threshold and recurrence values.
 #' @param interval integer with the interval for the monitoring check (in minutes).
-#'
+#' 
+#' @importFrom RCurl getURL
+#' @importFrom rjson fromJSON
+#' @export 
 uptimerobot.monitor.edit <- function(api.key,
                                     id,
                                     friendly.name,
@@ -77,8 +75,8 @@ uptimerobot.monitor.edit <- function(api.key,
     
   }
   
-  data <- rjson::fromJSON(
-    RCurl::getURL(
+  data <- fromJSON(
+    getURL(
       paste0("https://api.uptimerobot.com/editMonitor?apiKey=",
              api.key,
              "&monitorID=", id,

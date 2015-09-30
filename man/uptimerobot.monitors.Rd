@@ -2,7 +2,7 @@
 % Please edit documentation in R/uptimerobot.monitors.R
 \name{uptimerobot.monitors}
 \alias{uptimerobot.monitors}
-\title{Get general informations for one or more monitors}
+\title{Get general informations about monitors}
 \usage{
 uptimerobot.monitors(api.key, monitors = NULL, types = NULL,
   statuses = NULL, search = NULL, summary = list(), limit = 50,
@@ -27,6 +27,9 @@ uptimerobot.monitors(api.key, monitors = NULL, types = NULL,
 
 \item{fields}{vector or comma-delimited string with the general informations to include in the output dataset.
 You may use the helper function \code{\link{uptimerobot.fields}} if you don't want to manually compile the list of fields.}
+}
+\value{
+A dataset with general informations about the given monitors
 }
 \description{
 \code{uptimerobots.monitors.responses} return a dataset with general informations

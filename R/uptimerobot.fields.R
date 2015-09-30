@@ -1,10 +1,5 @@
-#' @rdname uptimerobot.fields
-#' @export
-#'
-#' @title 
 #' Get a list of the available fields for various endpoints
 #'
-#' @description
 #' \code{uptimerobots.fields} returns a list of vectors of available fields for commodity uses.
 #' Use it to avoid manually typing long list of fields in vectors or comma-delimited strings when used in various endpoints.
 #' 
@@ -12,6 +7,7 @@
 #' Use the \code{type} parameter to choose which set of fields to return in a list of vectors. These endpoints are currently supported:
 #' \code{monitor} and \code{contact}.
 #'
+#' @return
 #' The function returns a list of 3 elements which in turn contains a vector of available fields for a given \code{set} each.
 #' The returned elements are:
 #' \enumerate{
@@ -20,8 +16,7 @@
 #'   \item \code{compact} return a minimal set of fields.
 #' }
 
-#' @author
-#' Gabriele Baldassarre
+#' @author Gabriele Baldassarre
 #' @seealso \code{\link{uptimerobot.monitors}}, \code{\link{uptimerobot.contacts}}
 #'
 #' @param type string with the type of fields to be reported. Only \code{monitor} and \code{contact} are currently supported.

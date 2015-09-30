@@ -11,10 +11,11 @@ uptimerobot.monitor.delete(api.key, id)
 
 \item{id}{numeric or integer with the ID of the monitor to delete.}
 }
+\value{
+The function returns \code{TRUE} in case success. An error is thrown otherwise.
+}
 \description{
 \code{uptimerobot.monitor.delete} remove a monitor and all existing statistics of it.
-
-The function returns \code{TRUE} in case success. An error is thrown otherwise.
 }
 \author{
 Gabriele Baldassarre

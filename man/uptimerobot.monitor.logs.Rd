@@ -15,10 +15,14 @@ uptimerobot.monitor.logs(api.key, monitors, limit = 50, offset = 0)
 
 \item{offset}{An integer value to set the index of the first monitor to get (used for pagination).}
 }
+\value{
+A dataset with the log events for the given monitors.
+}
 \description{
 \code{uptimerobot.monitor.logs} return a dataset with all logged messages
 for the given monitors IDs.
-
+}
+\details{
 The API uses pagination and returns no more than 50 monitors on each page. Use \code{limit} and \code{offset} to set a different number of
 monitors to get on each page and to move between pages. Leave default values to get all the data.
 }
