@@ -6,13 +6,28 @@
 #' 
 #' @return A list or a vector with the account details.
 #'
-#' @param api.key a string with a valid key for connecting to UptimeRobors public API.
+#' @param api.key string with a valid key for connecting to Uptimerobot API.
 #' @param unlist logical. Set to \code{TRUE} to unlist the output to a named vector, \code{FALSE} to get a named list.
+#'
+#' @examples
+#' # Let's assume the api.key is available into the environment variable KEY
+#' api.key <- Sys.getenv("KEY", "")
+#' 
+#' # Returns details as a list
+#' details.list <- uptimerobot.account.details(api.key)
+#' 
+#' # Returns details as a vector
+#' details.num <- uptimerobot.account.details(api.key, unlist = TRUE)
 #'
 #' @importFrom RCurl getURL
 #' @importFrom rjson fromJSON
-#' @export 
+#' @export
 uptimerobot.account.details <- function(api.key, unlist = FALSE){
+  
+  if(is.null(api.key) | 
+     is.na(api.key) | 
+     (is.character(api.key) & nchar(api.key)==0)
+     ) stop("api.key cannot be empty or NULL")
   
   data <- fromJSON(
     getURL(
