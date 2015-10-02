@@ -7,7 +7,7 @@
 uptimerobot.account.details(api.key, unlist = FALSE)
 }
 \arguments{
-\item{api.key}{a string with a valid key for connecting to UptimeRobors public API.}
+\item{api.key}{string with a valid key for connecting to Uptimerobot API.}
 
 \item{unlist}{logical. Set to \code{TRUE} to unlist the output to a named vector, \code{FALSE} to get a named list.}
 }
@@ -16,6 +16,16 @@ A list or a vector with the account details.
 }
 \description{
 \code{uptimerobot.account.details} returns a list or a vector with the account details connected to the given api key.
+}
+\examples{
+# Let's assume the api.key is available into the environment variable KEY
+api.key <- Sys.getenv("KEY", "")
+
+# Returns details as a list
+details.list <- uptimerobot.account.details(api.key)
+
+# Returns details as a vector
+details.num <- uptimerobot.account.details(api.key, unlist = TRUE)
 }
 \author{
 Gabriele Baldassarre

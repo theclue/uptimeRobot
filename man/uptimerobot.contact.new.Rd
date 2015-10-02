@@ -9,7 +9,7 @@ uptimerobot.contact.new(api.key, type, value, friendly.name)
 \arguments{
 \item{api.key}{string with a valid key for connecting to Uptimerobot API.}
 
-\item{type}{string or integer with the type of the contact. You can use both the friendly name (string) or the index (integer) here.}
+\item{type}{string or numeric with the type of the contact. You can use both the value (string) or the index (numeric) here.}
 
 \item{value}{string with the value of the contact (ie. the email address).}
 
@@ -23,8 +23,24 @@ The function returns the ID of the newly created contact in case success. An err
 }
 \details{
 The alert contacts are whom to be notified when the monitor goes up/down.
+
+The index lookup keys and values are available on the Uptimerobot API page on \url{https://uptimerobot.com/api}
+}
+\examples{
+\dontrun{
+ # Let's assume the api.key is available into the environment variable KEY
+ api.key <- Sys.getenv("KEY", "")
+ # Create a new contact and get the ID
+ contact.new <- uptimerobot.contact.new(api.key, type = "email", value = "foo@bar.com", "John Doe")
+
+ # Get informations about this new contact
+ contact.detail <- uptimerobot.contacts(api.key, contacts = contact.new)
+}
 }
 \author{
 Gabriele Baldassarre
+}
+\seealso{
+\code{\link{uptimerobot.contacts}}, \code{\link{uptimerobot.contact.delete}}
 }
 
