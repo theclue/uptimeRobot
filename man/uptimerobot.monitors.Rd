@@ -26,7 +26,7 @@ uptimerobot.monitors(api.key, monitors = NULL, types = NULL,
 \item{offset}{An integer value to set the index of the first monitor to get (used for pagination).}
 
 \item{fields}{vector or comma-delimited string with the general informations to include in the output dataset.
-You may use the helper function \code{\link{uptimerobot.fields}} if you don't want to manually compile the list of fields.}
+You may want to use the helper function \code{\link{uptimerobot.fields}} if you don't want to manually compile the list of fields.}
 }
 \value{
 A dataset with general informations about the given monitors
@@ -39,18 +39,36 @@ for a set of monitors.
 If a vector of monitor is not given, the function will return data for all the available monitors.
 
 \code{summary} parameter expect a lists of three named logic values that set which columns of additional statistics for each monitor must  be added to output dataset for
-each available monitor:
+each available monitor. These are summary values only, as the instances are obtained using a set of dedicated functions.
 
 \enumerate{
-  \item \code{response.times} set to \code{TRUE} to add the number of pings with response times available for the monitor. These values can be queried using \code{\link{uptimerobot.monitor.responses}} function.
-  \item \code{log.records} set to \code{TRUE} to add the number of log entries recorded for the monitor. These records can be queried using \code{\link{uptimerobot.monitor.logs}} function.
-  \item \code{alert.contacts} set to \code{TRUE} to add number of alert contacts binded to the monitor. Detailed informations about these contacts can be queried using \code{\link{uptimerobot.monitor.contacts}} function.
+  \item \code{response.times} set to \code{TRUE} to add a column with the number of pings with response times available for the monitor to the output. These values can be queried using \code{\link{uptimerobot.monitor.responses}} function.
+  \item \code{log.records} set to \code{TRUE} to add a column with the number of log entries recorded for the monitor to the output. These records can be queried using \code{\link{uptimerobot.monitor.logs}} function.
+  \item \code{alert.contacts} set to \code{TRUE} to add a column with the number of alert contacts binded to the monitor to the output. Detailed informations about these contacts can be queried using \code{\link{uptimerobot.monitor.contacts}} function.
 }
 
 You may just add the elements you want to include into the list, as they default to \code{FALSE} if missing. Set an empty list to exclude all the summary statistics from the output.
 
 The API uses pagination and returns no more than 50 monitors on each page. Use \code{limit} and \code{offset} to set a different number of
 monitors to get on each page and to move between pages. Leave default values to get all the data.
+}
+\examples{
+\dontrun{
+# Let's assume the api.key is available into the environment variable KEY
+api.key <- Sys.getenv("KEY", "")
+
+# Returns all the  monitors with a default set of attributes
+monitors.df <- uptimerobot.monitors(api.key)
+
+#' # Returns all the monitors of 'keyword' type
+monitors.kwd..df <- uptimerobot.monitors(api.key, type="keyword")
+
+# Returns all the monitors and all the attributes
+monitors.full.df <- uptimerobot.monitors(api.key, fields=uptimerobot.fields("monitor")$full))
+
+# Returns only the two monitors with ID: 1234, 5678
+monitors.df <- uptimerobot.monitors(api.key, c("1234", "5678"))
+}
 }
 \author{
 Gabriele Baldassarre

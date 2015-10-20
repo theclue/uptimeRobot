@@ -26,6 +26,19 @@ for the given monitors IDs.
 The API uses pagination and returns no more than 50 monitors on each page. Use \code{limit} and \code{offset} to set a different number of
 monitors to get on each page and to move between pages. Leave default values to get all the data.
 }
+\examples{
+\dontrun{
+# Let's assume the api.key is available into the environment variable KEY
+api.key <- Sys.getenv("KEY", "")
+
+# Returns all the monitors IDs. Since the function always return a data.frame (even if you ask only for a column),
+you have to reference the column to get a character vector.
+monitors.id <- uptimerobot.monitors(api.key, fields="id")$id
+
+# Returns all the ping events for the given monitors
+logs.df <- uptimerobot.monitor.responses(api.key, monitors=monitors.id)
+}
+}
 \author{
 Gabriele Baldassarre
 }

@@ -17,6 +17,19 @@
 #' @param limit An integer value used for pagination. Defines the max number of records to return in each page. Default and max. is 50.
 #' @param offset An integer value to set the index of the first monitor to get (used for pagination).
 #' 
+#' @examples
+#' \dontrun{
+#' # Let's assume the api.key is available into the environment variable KEY
+#' api.key <- Sys.getenv("KEY", "")
+#' 
+#' # Returns all the monitors IDs. Since the function always return a data.frame
+#' # (even if you ask only for a column), you have to reference the column to get a character vector.
+#' monitors.id <- uptimerobot.monitors(api.key, fields="id")$id
+#' 
+#' # Returns all the log events for the given monitors
+#' logs.df <- uptimerobot.monitor.logs(api.key, monitors=monitors.id)
+#' }
+#'  
 #' @importFrom RCurl getURL
 #' @importFrom rjson fromJSON
 #' @importFrom plyr rbind.fill
@@ -25,17 +38,18 @@ uptimerobot.monitor.logs <- function(api.key,
                                      monitors,
                                      limit=50,
                                      offset=0){
-
+  
   data <- fromJSON(
     getURL(
-      paste0("https://api.uptimerobot.com/getMonitors?apiKey=",
-             api.key,
-             "&monitors=", paste0(unique(unlist(strsplit(monitors, split = ","))), collapse = "-"),
-             "&logs=1",
-             "&limit=", limit,
-             "&offset=", offset,
-             "&format=json&noJsonCallback=1"
+      URLencode(paste0("https://api.uptimerobot.com/getMonitors?apiKey=",
+                       api.key,
+                       "&monitors=", paste0(unique(unlist(strsplit(monitors, split = ","))), collapse = "-"),
+                       "&logs=1",
+                       "&limit=", limit,
+                       "&offset=", offset,
+                       "&format=json&noJsonCallback=1"
       )      
+      )
     ),
     unexpected.escape="keep"
   )
@@ -46,25 +60,25 @@ uptimerobot.monitor.logs <- function(api.key,
         rbind.fill,lapply(data$monitors$monitor, function(x) {
           
           logs <- do.call(rbind, lapply(x$log, function(y){
-            y$datetime <- strptime(y$datetime, format="%m/%d/%y %H:%M:%S")
+            y$datetime <- strptime(y$datetime, format="%m/%d/%Y %H:%M:%S")
             do.call(data.frame, list(y, stringsAsFactors = FALSE))
           }))
           logs$monitor.id <- x$id
-
+          
           return(logs[,c(3,1,2)])
         })
       )
       
       # Convert to proper datatypes
       data.merged$type <- factor(as.integer(data.merged$type), levels=c(1,2,99,98), labels=c("down", "up", "paused", "started"))
-
+      
       # Pagination
       if((as.integer(data$offset) + as.integer(data$limit)) >= as.integer(data$total)) return(data.merged)
       else {
         rbind.fill(data.merged, uptimerobot.monitor.logs(api.key = api.key, 
-                                                              monitors = monitors, 
-                                                              limit = limit,
-                                                              offset = as.character(as.integer(offset) + as.integer(limit))))
+                                                         monitors = monitors, 
+                                                         limit = limit,
+                                                         offset = as.character(as.integer(offset) + as.integer(limit))))
       }
     })()
     )
@@ -72,5 +86,4 @@ uptimerobot.monitor.logs <- function(api.key,
   else {
     stop("Error:", data$message)
   }
-  
 }

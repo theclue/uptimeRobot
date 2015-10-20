@@ -11,7 +11,7 @@ uptimerobot.contacts(api.key, contacts = NULL, limit = 50, offset = 0,
 \item{api.key}{A valid key for connecting to UptimeRobors public API.}
 
 \item{contacts}{vector or comma-delimited string with the IDs of the contacts to get.
-If the argument is NULL or missing, all the available monitors will be returned.}
+If the argument is NULL or missing, all the available contacts will be returned.}
 
 \item{limit}{An integer value used for pagination. Defines the max number of records to return in each page. Default and max. is 50.}
 
@@ -34,6 +34,21 @@ If a vector of contact IDs is not given, the function will return data for all t
 
 The API uses pagination and returns no more than 50 contacts on each page. Use \code{limit} and \code{offset} to set a different number of
 monitors to get on each page and to move between pages. Leave default values to get all the data.
+}
+\examples{
+\dontrun{
+# Let's assume the api.key is available into the environment variable KEY
+api.key <- Sys.getenv("KEY", "")
+
+# Returns all the contacts with a default set of attributes
+contacts.df <- uptimerobot.contacts(api.key)
+
+# Returns all the contacts and all the attributes
+contacts.full.df <- uptimerobot.contacts(api.key, fields=uptimerobot.fields("contact")$full))
+
+# Returns only the two contacts with ID: 1234, 5678
+contacts.df <- uptimerobot.contacts(api.key, c("1234", "5678"))
+}
 }
 \author{
 Gabriele Baldassarre

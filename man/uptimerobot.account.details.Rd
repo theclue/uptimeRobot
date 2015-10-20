@@ -18,6 +18,7 @@ A list or a vector with the account details.
 \code{uptimerobot.account.details} returns a list or a vector with the account details connected to the given api key.
 }
 \examples{
+\dontrun{
 # Let's assume the api.key is available into the environment variable KEY
 api.key <- Sys.getenv("KEY", "")
 
@@ -26,6 +27,7 @@ details.list <- uptimerobot.account.details(api.key)
 
 # Returns details as a vector
 details.num <- uptimerobot.account.details(api.key, unlist = TRUE)
+}
 }
 \author{
 Gabriele Baldassarre

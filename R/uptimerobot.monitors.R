@@ -43,10 +43,10 @@
 #' api.key <- Sys.getenv("KEY", "")
 #' 
 #' # Returns all the  monitors with a default set of attributes
-#' monitors.df <- uptimerobot.monitor(api.key)
+#' monitors.df <- uptimerobot.monitors(api.key)
 #' 
 #' #' # Returns all the monitors of 'keyword' type
-#' monitors.kwd..df <- uptimerobot.monitor(api.key, type="keyword")
+#' monitors.kwd..df <- uptimerobot.monitors(api.key, type="keyword")
 #' 
 #' # Returns all the monitors and all the attributes
 #' monitors.full.df <- uptimerobot.monitors(api.key, fields=uptimerobot.fields("monitor")$full))
@@ -68,6 +68,11 @@ uptimerobot.monitors <- function(api.key,
                                  limit=50,
                                  offset=0,
                                  fields=uptimerobot.fields("monitor")$typical){
+  
+  if(is.null(api.key) | 
+     is.na(api.key) | 
+     (is.character(api.key) & nchar(api.key)==0)
+  ) stop("api.key cannot be empty or NULL")
   
   fields <- (function(x){ if(length(x) == 0) "id" else x })(fields)
   
@@ -106,8 +111,8 @@ uptimerobot.monitors <- function(api.key,
       URLencode(paste0("https://api.uptimerobot.com/getMonitors?apiKey=",
              api.key,
              ifelse(is.null(monitors), "", paste0("&monitors=", paste0(unique(unlist(strsplit(monitors, split = ","))), collapse = "-"), sep="")),
-             ifelse(is.null(types) | is.na(types), "", paste0("&types=", paste0(unique(types[!is.na(types)]), collapse = "-"), sep="")),
-             ifelse(is.null(statuses) | is.na(statuses), "", paste0("&statuses=", paste0(unique(statuses[!is.na(statuses)]), collapse = "-"), sep="")),
+             ifelse(!is.null(types), paste0("&types=", paste0(unique(types[!is.na(types)]), collapse = "-"), sep=""), ""),
+             ifelse(!is.null(statuses), paste0("&statuses=", paste0(unique(statuses[!is.na(statuses)]), collapse = "-"), sep=""), ""),
              ifelse(is.null(search), "", paste0("&search=", search, sep="")),
              "&responseTimes=", as.integer(include.responses),
              "&logs=", as.integer(include.logs),

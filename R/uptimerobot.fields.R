@@ -21,6 +21,7 @@
 #'
 #' @param type string with the type of fields to be reported. Only \code{monitor} and \code{contact} are currently supported.
 #' 
+#' @export
 uptimerobot.fields <- function(type){
   
   if(type == "monitor"){

@@ -25,6 +25,10 @@
 #' @export 
 uptimerobot.contact.delete <- function(api.key, id){
   
+  if(is.null(api.key) | 
+     is.na(api.key) | 
+     (is.character(api.key) & nchar(api.key)==0)
+  ) stop("api.key cannot be empty or NULL")
   
   data <- fromJSON(
     getURL(

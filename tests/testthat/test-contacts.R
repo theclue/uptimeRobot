@@ -16,8 +16,8 @@ test_that("uptimerobot.contacts", {
   # Output is a data frame
   expect_is(contacts.typical, "data.frame")
   
-  # Output has the expected number of columns (typical)
-  expect_equal(ncol(contacts.typical), length(uptimerobot.fields("contact")$typical))
+  # Output has the expected columns (typical)
+  expect_identical(sort(colnames(contacts.typical)), sort(uptimerobot.fields("contact")$typical))
 
   # Get fields (full)
   contacts.full <- uptimerobot.contacts(api.key, fields=uptimerobot.fields("contact")$full)
@@ -25,8 +25,8 @@ test_that("uptimerobot.contacts", {
   # Output is a data frame
   expect_is(contacts.full, "data.frame")
   
-  # Output has the expected number of columns (typical)
-  expect_equal(ncol(contacts.full), length(uptimerobot.fields("contact")$full))
+  # Output has the expected columns (full)
+  expect_identical(sort(colnames(contacts.full)), sort(uptimerobot.fields("contact")$full))
 
   # Get fields (compact)
   contacts.compact <- uptimerobot.contacts(api.key, fields=uptimerobot.fields("contact")$compact)
@@ -34,8 +34,8 @@ test_that("uptimerobot.contacts", {
   # Output is a data frame
   expect_is(contacts.compact, "data.frame")
   
-  # Output has the expected number of columns (typical)
-  expect_equal(ncol(contacts.compact), length(uptimerobot.fields("contact")$compact))
+  # Output has the expected columns (typical)
+  expect_identical(sort(colnames(contacts.compact)), sort(uptimerobot.fields("contact")$compact))
   
   # Clean the environment
   rm(list = ls())
