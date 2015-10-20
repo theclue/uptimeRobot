@@ -17,6 +17,17 @@ The function returns \code{TRUE} in case success. An error is thrown otherwise.
 \description{
 \code{uptimerobot.contact.delete} removes an alert contanct, unlinking from all the registered monitors.
 }
+\examples{
+\dontrun{
+ # Let's assume the api.key is available into the environment variable KEY
+ api.key <- Sys.getenv("KEY", "")
+
+ # Create a new contact and get the ID
+ if(uptimerobot.contact.delete(api.key, 12345678){
+   message("Alert contact successfully deleted!")
+ }
+}
+}
 \author{
 Gabriele Baldassarre
 }
