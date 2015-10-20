@@ -27,14 +27,15 @@ uptimerobot.account.details <- function(api.key, unlist = FALSE){
   if(is.null(api.key) | 
      is.na(api.key) | 
      (is.character(api.key) & nchar(api.key)==0)
-     ) stop("api.key cannot be empty or NULL")
+  ) stop("api.key cannot be empty or NULL")
   
   data <- fromJSON(
     getURL(
-      paste0("https://api.uptimerobot.com/getAccountDetails?apiKey=",
-             api.key,
-             "&format=json&noJsonCallback=1"
+      URLencode(paste0("https://api.uptimerobot.com/getAccountDetails?apiKey=",
+                       api.key,
+                       "&format=json&noJsonCallback=1"
       )      
+      )
     ),
     unexpected.escape="keep"
   )

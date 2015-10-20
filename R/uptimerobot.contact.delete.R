@@ -9,6 +9,17 @@
 #' @param api.key string with a valid key for connecting to Uptimerobot API.
 #' @param id numeric or integer with the ID of the contact to delete.
 #'
+#' @examples
+#' \dontrun{
+#'  # Let's assume the api.key is available into the environment variable KEY
+#'  api.key <- Sys.getenv("KEY", "")
+#'  
+#'  # Create a new contact and get the ID
+#'  if(uptimerobot.contact.delete(api.key, 12345678){
+#'    message("Alert contact successfully deleted!")
+#'  }
+#' }
+#' 
 #' @importFrom RCurl getURL
 #' @importFrom rjson fromJSON
 #' @export 
@@ -17,11 +28,12 @@ uptimerobot.contact.delete <- function(api.key, id){
   
   data <- fromJSON(
     getURL(
-      paste0("https://api.uptimerobot.com/deleteAlertContact?apiKey=",
+      URLencode(paste0("https://api.uptimerobot.com/deleteAlertContact?apiKey=",
              api.key,
-             "&alertContactID=", id,
+             "&alertcontactID=", id,
              "&format=json&noJsonCallback=1"
       )      
+    )
     ),
     unexpected.escape="keep"
   )
