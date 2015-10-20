@@ -53,19 +53,20 @@ uptimerobot.contact.new <- function(api.key,
   
   data <- fromJSON(
     getURL(
-      paste0("https://api.uptimerobot.com/newAlertContact?apiKey=",
-             api.key,
-             "&alertContactFriendlyName=", friendly.name,
-             "&alertContactType=", type,
-             "&alertContactValue=", value,
-             "&format=json&noJsonCallback=1"
+      URLencode(paste0("https://api.uptimerobot.com/newAlertContact?apiKey=",
+                       api.key,
+                       "&alertContactFriendlyName=", friendly.name,
+                       "&alertContactType=", type,
+                       "&alertContactValue=", value,
+                       "&format=json&noJsonCallback=1"
       )      
+      )
     ),
     unexpected.escape="keep"
   )
   
   if(data$stat=="ok") {
-    return(as.numeric(data$contact$id))
+    return(as.numeric(data$alertcontact$id))
   }
   else {
     stop(data$message)
