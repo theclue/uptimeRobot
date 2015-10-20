@@ -10,6 +10,7 @@
 #' @param unlist logical. Set to \code{TRUE} to unlist the output to a named vector, \code{FALSE} to get a named list.
 #'
 #' @examples
+#' \dontrun{
 #' # Let's assume the api.key is available into the environment variable KEY
 #' api.key <- Sys.getenv("KEY", "")
 #' 
@@ -18,7 +19,8 @@
 #' 
 #' # Returns details as a vector
 #' details.num <- uptimerobot.account.details(api.key, unlist = TRUE)
-#'
+#' }
+#' 
 #' @importFrom RCurl getURL
 #' @importFrom rjson fromJSON
 #' @export

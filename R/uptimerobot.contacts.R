@@ -19,11 +19,26 @@
 #'
 #' @param api.key A valid key for connecting to UptimeRobors public API.
 #' @param contacts vector or comma-delimited string with the IDs of the contacts to get.
-#' If the argument is NULL or missing, all the available monitors will be returned. 
+#' If the argument is NULL or missing, all the available contacts will be returned. 
 #' @param fields vector or comma-delimited string with the general informations to include in the output dataset.
 #' You may use the helper function \code{\link{uptimerobot.fields}} if you don't want to manually compile the list of fields.
 #' @param limit An integer value used for pagination. Defines the max number of records to return in each page. Default and max. is 50.
 #' @param offset An integer value to set the index of the first monitor to get (used for pagination).
+#'
+#' @examples
+#' \dontrun{
+#' # Let's assume the api.key is available into the environment variable KEY
+#' api.key <- Sys.getenv("KEY", "")
+#' 
+#' # Returns all the contacts with a default set of attributes
+#' contacts.df <- uptimerobot.contacts(api.key)
+#' 
+#' # Returns all the contacts and all the attributes
+#' contacts.full.df <- uptimerobot.contacts(api.key, fields=uptimerobot.fields("contact")$full))
+#' 
+#' # Returns only the two contacts with ID: 1234, 5678
+#' contacts.df <- uptimerobot.contacts(api.key, c("1234", "5678"))
+#' }
 #' 
 #' @importFrom RCurl getURL
 #' @importFrom rjson fromJSON
@@ -42,13 +57,14 @@ uptimerobot.contacts <- function(api.key,
 
   data <- fromJSON(
     getURL(
-      paste0("https://api.uptimerobot.com/getAlertContacts?apiKey=",
+      URLencode(paste0("https://api.uptimerobot.com/getAlertContacts?apiKey=",
              api.key,
              ifelse(is.null(contacts), "", paste0("&alertcontacts=", paste0(unique(unlist(strsplit(contacts, split = ","))), collapse = "-"), sep="")),
              "&limit=", limit,
              "&offset=", offset,
              "&format=json&noJsonCallback=1"
       )      
+    )
     ),
     unexpected.escape="keep"
   )
