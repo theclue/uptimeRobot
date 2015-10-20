@@ -10,7 +10,7 @@ test_that("uptimerobot.contact.new/delete", {
   
   # Error in case the api.key is NULL or empty
   expect_error(uptimerobot.contact.new(""), "api.key cannot be empty or NULL")
-  expect_error(uptimerobot.contact.delete(""), "api.key cannot be empty or NULL")
+  expect_error(uptimerobot.contact.delete("", 1234), "api.key cannot be empty or NULL")
   
   # ContactID doesn't exist
   expect_error(uptimerobot.contact.delete(api.key, 1234), "alertContactID doesn't exist")
