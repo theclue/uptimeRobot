@@ -10,11 +10,14 @@ There were no ERRORs or WARNINGs.
 There was 1 NOTE:
 
 * checking CRAN incoming feasibility ... NOTE  
-Maintainer: 'Dean Attali daattali@gmail.com'  
-New submission  
+Maintainer: 'Gabriele Baldassarre <gabriele@gabrielebaldassarre.com>'
+New submission
+
 License components with restrictions and base license permitting such:
   MIT + file LICENSE
 File 'LICENSE':
   The MIT License (MIT)
   
   Copyright (c) 2015 Gabriele Baldassarre
+  
+  [...CUT...]
