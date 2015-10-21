@@ -14,7 +14,7 @@
 #'  # Let's assume the api.key is available into the environment variable KEY
 #'  api.key <- Sys.getenv("KEY", "")
 #'  
-#'  # Create a new contact and get the ID
+#'  # Delete the contact with id=12345678
 #'  if(uptimerobot.contact.delete(api.key, 12345678){
 #'    message("Alert contact successfully deleted!")
 #'  }

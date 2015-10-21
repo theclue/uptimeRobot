@@ -4,7 +4,7 @@
 \alias{uptimerobot.monitor.new}
 \title{Add a new monitor}
 \usage{
-uptimerobot.monitor.new(api.key, friendly.name, URL, type, subtype = NULL,
+uptimerobot.monitor.new(api.key, friendly.name, url, type, subtype = NULL,
   port = NULL, interval = 5, keyword.type = NULL, keyword.value = NULL,
   HTTP.username = NULL, HTTP.password = NULL, alert.contacts = NULL)
 }
@@ -13,7 +13,7 @@ uptimerobot.monitor.new(api.key, friendly.name, URL, type, subtype = NULL,
 
 \item{friendly.name}{string the friendly (screen) name of the monitor.}
 
-\item{URL}{string with the URL/IP of the monitor.}
+\item{url}{string with the URL/IP of the monitor.}
 
 \item{type}{string or integer with the type of the monitor. You can use both the friendly name (string) or the index (integer) here.}
 
@@ -46,6 +46,31 @@ Multiple alert contact IDs can be sent in a character vector or in a data frame.
 If you prefer to format it as a data.frame, it must have these three columns: \code{id, threshold, recurrence}, numeric or integer. Order of the columns doesn't matter.
 
 Please note that thresholds and recurrences can be omitted (default to zero) and, as they are only available in the Pro Plan, they are always 0 in the Free Plan.
+}
+\examples{
+\dontrun{
+ # Let's assume the api.key is available into the environment variable KEY
+ api.key <- Sys.getenv("KEY", "")
+
+ # Create a monitor and get its monitor.id
+ monitor.id <- uptimerobot.monitor.new(api.key,
+   friendly.name="Open Analytics",
+   url="https://gabrielebaldassarre.com", type="http"
+ )
+
+ # Change the friendly name of the monitor
+  if(uptimerobot.monitor.edit(api.key,
+     monitor.id,
+     friendly.name="Open Analytics - gabrielebaldassarre.com"
+  ){
+   message("Monitor has been successfully edited!")
+ }
+
+ # Delete the just-made monitor
+ if(uptimerobot.monitor.delete(api.key, monitor.id){
+   message("Monitor has been successfully deleted!")
+ }
+}
 }
 \author{
 Gabriele Baldassarre

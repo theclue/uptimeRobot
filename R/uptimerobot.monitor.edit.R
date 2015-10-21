@@ -23,7 +23,7 @@
 #' @param api.key string with a valid key for connecting to Uptimerobot API.
 #' @param id numeric or integer with the ID of the monitor to edit.
 #' @param friendly.name string the friendly (screen) name of the monitor.
-#' @param URL string with the URL/IP of the monitor.
+#' @param url string with the URL/IP of the monitor.
 #' @param activate logical to set the status of the monitor. Set to \code{TRUE} to start the monitor or \code{FALSE} to put it in paused state.
 #' @param subtype string used only for "Port monitoring" to set which pre-defined port/service is monitored or if a custom port is monitored. You can use both the friendly name (string) or the index (integer) here.
 #' @param port string used only for "Port monitoring" to set the port monitored.
@@ -34,33 +34,58 @@
 #' @param alert.contacts character vector or data frame with the IDs to alert each with their threshold and recurrence values.
 #' @param interval integer with the interval for the monitoring check (in minutes).
 #' 
+#' @examples
+#' \dontrun{
+#'  # Let's assume the api.key is available into the environment variable KEY
+#'  api.key <- Sys.getenv("KEY", "")
+#'  
+#'  # Create a monitor and get its monitor.id
+#'  monitor.id <- uptimerobot.monitor.new(api.key, 
+#'    friendly.name="Open Analytics", 
+#'    url="https://gabrielebaldassarre.com", type="http"
+#'  )
+#'  
+#'  # Change the friendly name of the monitor
+#'   if(uptimerobot.monitor.edit(api.key, 
+#'      monitor.id, 
+#'      friendly.name="Open Analytics - gabrielebaldassarre.com"
+#'   ){
+#'    message("Monitor has been successfully edited!")
+#'  }
+#'  
+#'  # Delete the just-made monitor
+#'  if(uptimerobot.monitor.delete(api.key, monitor.id){
+#'    message("Monitor has been successfully deleted!")
+#'  }
+#' }
+#' 
 #' @importFrom RCurl getURL
 #' @importFrom rjson fromJSON
 #' @export 
 uptimerobot.monitor.edit <- function(api.key,
-                                    id,
-                                    friendly.name,
-                                    URL,
-                                    activate=TRUE,
-                                    subtype=NULL,
-                                    port=NULL,
-                                    interval=5,
-                                    keyword.type=NULL,
-                                    keyword.value=NULL,
-                                    HTTP.username=NULL,
-                                    HTTP.password=NULL,
-                                    alert.contacts=NULL){
+                                     id,
+                                     friendly.name=NULL,
+                                     url=NULL,
+                                     activate=TRUE,
+                                     subtype=NULL,
+                                     port=NULL,
+                                     interval=NULL,
+                                     keyword.type=NULL,
+                                     keyword.value=NULL,
+                                     HTTP.username=NULL,
+                                     HTTP.password=NULL,
+                                     alert.contacts=NULL){
   
-  # Decode monitor type
-  if(class(type) == "character"){
-    type <- as.numeric(factor(tolower(type), labels=1:4, levels=c("http", "keyword", "ping", "port")))
-  } else if(!(class(type) %in% c("integer", "numeric"))) stop(paste0(class(type), "is not a valid format for monitor type", sep=" "))
+  if(is.null(api.key) | 
+     is.na(api.key) | 
+     (is.character(api.key) & nchar(api.key)==0)
+  ) stop("api.key cannot be empty or NULL")
   
   # Decode monitor subtype
   if(!(is.null(subtype))){
-  if(class(subtype) == "character"){
-    subtype <- as.numeric(factor(toupper(subtype), labels=c(1,2,3,4,5,6,99), levels=c("HTTP", "HTTPS", "FTP", "SMTP", "POP3", "IMPAP", "Custom Port")))
-  } else if(!(class(subtype) %in% c("integer", "numeric"))) stop(paste0(class(subtype), "is not a valid format for monitor subtype", sep=" "))
+    if(class(subtype) == "character"){
+      subtype <- as.numeric(factor(toupper(subtype), labels=c(1,2,3,4,5,6,99), levels=c("HTTP", "HTTPS", "FTP", "SMTP", "POP3", "IMPAP", "Custom Port")))
+    } else if(!(class(subtype) %in% c("integer", "numeric"))) stop(paste0(class(subtype), "is not a valid format for monitor subtype", sep=" "))
   }
   
   if(!(is.null(alert.contacts))){
@@ -77,22 +102,23 @@ uptimerobot.monitor.edit <- function(api.key,
   
   data <- fromJSON(
     getURL(
-      paste0("https://api.uptimerobot.com/editMonitor?apiKey=",
-             api.key,
-             "&monitorID=", id,
-             "&monitorFriendlyName=", friendly.name,
-             "&monitorURL=", URL,
-             "&monitorStatus=", as.integer(activate),
-             ifelse(is.null(subtype), "", paste0("&monitorSubType", subtype, sep="=")),
-             ifelse(is.null(port), "", paste0("&monitorPort", port, sep="=")),
-             "&monitorInterval=", interval,
-             ifelse(is.null(keyword.type), "", paste0("&monitorKeywordType", keyword.type, sep="=")),
-             ifelse(is.null(keyword.value), "", paste0("&monitorKeywordValue", keyword.value, sep="=")),
-             ifelse(is.null(HTTP.username), "", paste0("&monitorHTTPUsername", HTTP.username, sep="=")),
-             ifelse(is.null(HTTP.password), "", paste0("&monitorHTTPPassword", HTTP.password, sep="=")),
-             ifelse(is.null(alert.contacts), "", paste0("&monitorAlertContacts", alert.contacts, sep="=")),
-             "&format=json&noJsonCallback=1"
+      URLencode(paste0("https://api.uptimerobot.com/editMonitor?apiKey=",
+                       api.key,
+                       "&monitorID=", id,
+                       ifelse(is.null(friendly.name), "", paste0("&monitorFriendlyName", friendly.name, sep="=")),
+                       ifelse(is.null(url), "", paste0("&monitorURL", url, sep="=")),
+                       "&monitorStatus=", as.integer(activate),
+                       ifelse(is.null(subtype), "", paste0("&monitorSubType", subtype, sep="=")),
+                       ifelse(is.null(port), "", paste0("&monitorPort", port, sep="=")),
+                       ifelse(is.null(interval), "", paste0("&monitorInterval", interval, sep="=")),
+                       ifelse(is.null(keyword.type), "", paste0("&monitorKeywordType", keyword.type, sep="=")),
+                       ifelse(is.null(keyword.value), "", paste0("&monitorKeywordValue", keyword.value, sep="=")),
+                       ifelse(is.null(HTTP.username), "", paste0("&monitorHTTPUsername", HTTP.username, sep="=")),
+                       ifelse(is.null(HTTP.password), "", paste0("&monitorHTTPPassword", HTTP.password, sep="=")),
+                       ifelse(is.null(alert.contacts), "", paste0("&monitorAlertContacts", alert.contacts, sep="=")),
+                       "&format=json&noJsonCallback=1"
       )      
+      )
     ),
     unexpected.escape="keep"
   )

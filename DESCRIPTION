@@ -1,15 +1,13 @@
 Package: uptimeRobot
 Type: Package
-Version: 0.2
-Title: R interface for Uptimerobot ping service
-Description: This package wraps all the endpoints of Uptimerobot online Ping service API.
+Version: 1.0.0
+Title: Access the UptimeRobot Ping API
+Description: Wrapper to call all the endpoints of Uptimerobot online Ping service API.
 Authors@R: person("Gabriele", "Baldassarre", role = c("aut", "cre"), email = "gabriele@gabrielebaldassarre.com")
-Author: Gabriele Baldassarre <gabriele@gabrielebaldassarre.com>
-Maintainer: Gabriele Baldassarre <gabriele@gabrielebaldassarre.com>
-Date: 2015-09-29
+Date: 2015-10-21
 URL: https://gabrielebaldassarre.com/r/uptimerobot
 BugReports: https://github.com/theclue/uptimeRobot/issues
-Depends: R (>= 3.1.0)
+Depends: R (>= 3.0)
 Imports:
     rjson,
     RCurl,

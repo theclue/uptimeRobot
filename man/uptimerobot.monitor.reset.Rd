@@ -2,7 +2,7 @@
 % Please edit documentation in R/uptimerobot.monitor.reset.R
 \name{uptimerobot.monitor.reset}
 \alias{uptimerobot.monitor.reset}
-\title{Delete a monitor}
+\title{Reset a monitor}
 \usage{
 uptimerobot.monitor.reset(api.key, id)
 }
@@ -16,6 +16,19 @@ The function returns \code{TRUE} in case success. An error is thrown otherwise.
 }
 \description{
 \code{uptimerobot.monitor.reset} remove all the statistics and logs associated to a monitor ID.
+}
+\examples{
+\dontrun{
+ # Let's assume the api.key is available into the environment variable KEY
+ api.key <- Sys.getenv("KEY", "")
+
+# Get a list of all available monitors, and take the first id
+monitors.id <- uptimerobot.monitors(api.key, fields="id")[1,1]
+
+ # Reset the stats for that monitor
+ uptimerobot.monitor.reset(api.key, monitor.id)
+
+}
 }
 \author{
 Gabriele Baldassarre

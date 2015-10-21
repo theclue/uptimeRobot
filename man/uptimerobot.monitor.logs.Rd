@@ -31,8 +31,8 @@ monitors to get on each page and to move between pages. Leave default values to 
 # Let's assume the api.key is available into the environment variable KEY
 api.key <- Sys.getenv("KEY", "")
 
-# Returns all the monitors IDs. Since the function always return a data.frame (even if you ask only for a column),
-you have to reference the column to get a character vector.
+# Returns all the monitors IDs. Since the function always return a data.frame
+# (even if you ask only for a column), you have to reference the column to get a character vector.
 monitors.id <- uptimerobot.monitors(api.key, fields="id")$id
 
 # Returns all the log events for the given monitors

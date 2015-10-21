@@ -17,6 +17,31 @@ The function returns \code{TRUE} in case success. An error is thrown otherwise.
 \description{
 \code{uptimerobot.monitor.delete} remove a monitor and all existing statistics of it.
 }
+\examples{
+\dontrun{
+ # Let's assume the api.key is available into the environment variable KEY
+ api.key <- Sys.getenv("KEY", "")
+
+ # Create a monitor and get its monitor.id
+ monitor.id <- uptimerobot.monitor.new(api.key,
+   friendly.name="Open Analytics",
+   url="https://gabrielebaldassarre.com", type="http"
+ )
+
+ # Change the friendly name of the monitor
+  if(uptimerobot.monitor.edit(api.key,
+     monitor.id,
+     friendly.name="Open Analytics - gabrielebaldassarre.com"
+  ){
+   message("Monitor has been successfully edited!")
+ }
+
+ # Delete the just-made monitor
+ if(uptimerobot.monitor.delete(api.key, monitor.id){
+   message("Monitor has been successfully deleted!")
+ }
+}
+}
 \author{
 Gabriele Baldassarre
 }

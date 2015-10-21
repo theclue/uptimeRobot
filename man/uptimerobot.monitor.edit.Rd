@@ -4,10 +4,10 @@
 \alias{uptimerobot.monitor.edit}
 \title{Edit a monitor}
 \usage{
-uptimerobot.monitor.edit(api.key, id, friendly.name, URL, activate = TRUE,
-  subtype = NULL, port = NULL, interval = 5, keyword.type = NULL,
-  keyword.value = NULL, HTTP.username = NULL, HTTP.password = NULL,
-  alert.contacts = NULL)
+uptimerobot.monitor.edit(api.key, id, friendly.name = NULL, url = NULL,
+  activate = TRUE, subtype = NULL, port = NULL, interval = NULL,
+  keyword.type = NULL, keyword.value = NULL, HTTP.username = NULL,
+  HTTP.password = NULL, alert.contacts = NULL)
 }
 \arguments{
 \item{api.key}{string with a valid key for connecting to Uptimerobot API.}
@@ -16,7 +16,7 @@ uptimerobot.monitor.edit(api.key, id, friendly.name, URL, activate = TRUE,
 
 \item{friendly.name}{string the friendly (screen) name of the monitor.}
 
-\item{URL}{string with the URL/IP of the monitor.}
+\item{url}{string with the URL/IP of the monitor.}
 
 \item{activate}{logical to set the status of the monitor. Set to \code{TRUE} to start the monitor or \code{FALSE} to put it in paused state.}
 
@@ -54,6 +54,31 @@ Multiple alert contact IDs can be sent in a character vector or in a data frame.
 If you prefer to format it as a data.frame, it must have these three columns: \code{id, threshold, recurrence}, numeric or integer. Order of the columns doesn't matter.
 
 Please note that thresholds and recurrences can be omitted (default to zero) and, as they are only available in the Pro Plan, they are always 0 in the Free Plan.
+}
+\examples{
+\dontrun{
+ # Let's assume the api.key is available into the environment variable KEY
+ api.key <- Sys.getenv("KEY", "")
+
+ # Create a monitor and get its monitor.id
+ monitor.id <- uptimerobot.monitor.new(api.key,
+   friendly.name="Open Analytics",
+   url="https://gabrielebaldassarre.com", type="http"
+ )
+
+ # Change the friendly name of the monitor
+  if(uptimerobot.monitor.edit(api.key,
+     monitor.id,
+     friendly.name="Open Analytics - gabrielebaldassarre.com"
+  ){
+   message("Monitor has been successfully edited!")
+ }
+
+ # Delete the just-made monitor
+ if(uptimerobot.monitor.delete(api.key, monitor.id){
+   message("Monitor has been successfully deleted!")
+ }
+}
 }
 \author{
 Gabriele Baldassarre
