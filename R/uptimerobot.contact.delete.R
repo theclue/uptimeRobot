@@ -22,6 +22,7 @@
 #' 
 #' @importFrom RCurl getURL
 #' @importFrom rjson fromJSON
+#' @importFrom utils URLencode
 #' @export 
 uptimerobot.contact.delete <- function(api.key, id){
   

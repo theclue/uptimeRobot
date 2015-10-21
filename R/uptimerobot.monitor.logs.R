@@ -33,6 +33,7 @@
 #' @importFrom RCurl getURL
 #' @importFrom rjson fromJSON
 #' @importFrom plyr rbind.fill
+#' @importFrom utils URLencode
 #' @export 
 uptimerobot.monitor.logs <- function(api.key, 
                                      monitors,

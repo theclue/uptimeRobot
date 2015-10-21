@@ -37,6 +37,7 @@
 #' 
 #' @importFrom RCurl getURL
 #' @importFrom rjson fromJSON
+#' @importFrom utils URLencode
 #' @export 
 uptimerobot.monitor.delete <- function(api.key, id){
   

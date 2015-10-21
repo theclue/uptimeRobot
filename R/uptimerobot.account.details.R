@@ -23,6 +23,7 @@
 #' 
 #' @importFrom RCurl getURL
 #' @importFrom rjson fromJSON
+#' @importFrom utils URLencode
 #' @export
 uptimerobot.account.details <- function(api.key, unlist = FALSE){
   

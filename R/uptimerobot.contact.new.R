@@ -31,6 +31,7 @@
 #' 
 #' @importFrom RCurl getURL
 #' @importFrom rjson fromJSON
+#' @importFrom utils URLencode
 #' @export 
 uptimerobot.contact.new <- function(api.key,
                                     type,

@@ -55,6 +55,7 @@
 #'  
 #' @importFrom RCurl getURL
 #' @importFrom rjson fromJSON
+#' @importFrom utils URLencode
 #' @export 
 uptimerobot.monitor.new <- function(api.key,
                                     friendly.name,

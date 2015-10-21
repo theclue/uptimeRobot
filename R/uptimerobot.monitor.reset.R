@@ -24,6 +24,7 @@
 #' }
 #' @importFrom RCurl getURL
 #' @importFrom rjson fromJSON
+#' @importFrom utils URLencode
 #' @export 
 uptimerobot.monitor.reset <- function(api.key, id){
   
