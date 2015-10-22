@@ -20,3 +20,7 @@ env:
   global: 
   - secure: "guzlFpMU+Bj5JNsc8f4Dq97rEA5Bx3xFu4muk/AkSndaim8JE8ulFsiRk4gS+RdWF/HPugOd7rSqRmXomwnB3YAlMVVkH1cav/B/hVSJ4Xgc8SYrh0LsNhKTypIfxODZlD8WEnfbFhXlBDbOYIkEdpsXTQwB4DRjaA3iS3LVwvZXkA9wq2kFj5cUOXvvpTXcZ8kKiMUI5pCXNNUjjsE+s6yU5oTOMeB8b8VtAw1uh5rtvlbPqBKfTVfl4YVD5fEJyHlVdVV0jwdPW+XitG82zFvMO7R8rlr5+1HRtYDsOEfDGZR96sDnzG6RJd9jZedaudJ2I3mnhAbpiSMs2URHwRq+3XrQ9lft8PdMAGoCHC69padFOCYo+WClTEpyZbUujUMm5G9l/2oI015dd2zKh0G7he2D2p/L8B1lJ6GhkhHuzCxtvgdzALoewKPB2XiAdH+OnkFYatVKMg1TgCH+C2++k/d8PKY6Weo6mUT0GcMOigYKlbAciYKZKjxn9oiqKPTTTcHlI89JbtIMuzZLoCrUlXjAaZDhfGdBQCMEZFUHkcLG14aDVh1TkK7p2myaKWBoRTFqiZZU2kxRI3lRIYyB6qSPAabL9B0yF+XSroPIMdFijnKu+bKjAPTHCgEvgkiXkCj/IAfP29cZVkKN1JTCsZsim4LqE+KZZbYsKeM="
   - NOT_CRAN="true"
+r_github_packages:
+  - jimhester/covr
+after_success:
+  - Rscript -e 'library(covr);codecov()'
