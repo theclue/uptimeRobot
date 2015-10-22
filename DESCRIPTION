@@ -2,7 +2,9 @@ Package: uptimeRobot
 Type: Package
 Version: 1.0.0
 Title: Access the UptimeRobot Ping API
-Description: Wrapper to call all the endpoints of Uptimerobot online Ping service API.
+Description: Provide a set of wrappers to call all the endpoints of UptimeRobot API
+  which includes various kind of ping, keep-alive and speed tests.
+  See <https://uptimerobot.com/> for more information.
 Authors@R: person("Gabriele", "Baldassarre", role = c("aut", "cre"), email = "gabriele@gabrielebaldassarre.com")
 Date: 2015-10-21
 URL: https://gabrielebaldassarre.com/r/uptimerobot
