@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/theclue/uptimeRobot.svg?branch=master)](https://travis-ci.org/theclue/uptimeRobot)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/ggplot2)](http://cran.r-project.org/package=ggplot2)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/uptimeRobot)](http://cran.r-project.org/package=uptimeRobot)
 # uptimeRobot
 Provide a set of wrappers to call all the endpoints of UptimeRobot API which includes various kind of ping, keep-alive and speed tests. See <https://uptimerobot.com/> for more information.
 
